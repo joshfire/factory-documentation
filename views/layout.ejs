@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Joshfire Developer</title>
+  <link rel="stylesheet" type="text/css" media="all" href="http://joshfire.com/wp-content/themes/joshfire/style.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/doc.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/api.css" />
+  <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/highlight/sunburst.css" />
+
+  <link rel="icon" href="http://joshfire.com/files/2011/06/joshfire-favicon.png">
+</head>
+
+<body class="home page page-id-4 page-template page-template-page-home-php">
+
+  <script type="text/javascript" src="/js/underscore.min.js"></script>
+
+  <div id="branding" class="josh-type-Panel josh-id-header" style="display: block;">
+    <header id="branding" role="banner">
+      <div class="wrapper">
+        <hgroup>
+          <h1 id="site-title"><span><a href="http://joshfire.com" title="Joshfire" rel="home">Joshfire</a></span></h1>
+        </hgroup>
+
+        <nav id="access" role="navigation">
+          <h1 class="section-heading">Main menu</h1>
+          <div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+
+          <div class="menu-topmenu-container">
+              <ul id="menu-topmenu" class="menu">
+                <li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36 <%= currentPage.tab == 'home' ? 'current_page_item' : '' %>"><a href="/">Home</a></li>
+
+                <li id="menu-item-241" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-239 <%= currentPage.tab == 'doc' ? 'current_page_item' : '' %> menu-item-241"><a href="/doc/latest/">Documentation</a></li>
+                <li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39 <%= currentPage.tab == 'support' ? 'current_page_item' : '' %>"><a href="/support">Support</a></li>
+               
+              </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div id="submenu">
+      <div class="wrapper">
+        <!--
+          <nav>
+            <ul id="menu-topmenu" class="menu clearfix">
+              <li id="menu-item-home" class="menu-item menu-item-type-post_type menu-item-object-page <%= currentPage == 'index' ? 'current_page_item' : '' %>">
+                <a href="/">Overview</a>
+              </li>
+              <li id="menu-item-templates" class="menu-item menu-item-type-post_type menu-item-object-page <%= currentPage == 'templates' ? 'current_page_item' : '' %>">
+                <a href="/doc/latest/templates/">Templates</a>
+              </li>
+              
+            </ul>
+          </nav>
+          -->
+      </div>
+    </div>
+  </div>
+
+  <div id="main" class="documentation">
+    <div id="main" class="documentation">
+      <div class="wrapper">
+        <div id="primary" class="full-width">
+          
+          <!-- the right hand menu bar. This should be a partial -->
+          <div id="navmenu">
+            <ul class="nav-categories">
+              <% for (var catIdx in routes) { %>
+                <% var category = routes[catIdx]; %>
+                <% if (!category.hideinmenu) { %>
+                  <li><%= category.title %>
+                    <ul class="nav-pages">
+                      <% for (var pageIdx in category.pages) { %>
+                        <% var page = category.pages[pageIdx]; %>
+                        <li><a href="<%= '/doc/dev/' + category.folder + '/' + page.file %>">
+                          <%= routes[catIdx].pages[pageIdx].title %>
+                        </a></li>
+                      <% } %>
+                    </ul>
+                  </li>
+                <% } %>
+              <% } %>
+              <li>Support</li>
+              <ul class="nav-pages">
+                <li><a href="http://factory.joshfire.com/faq">FAQ</a></li>
+                <li><a href="https://groups.google.com/group/joshfire-dev">Joshfire-dev Google Group</a></li>
+                <li><a href="irc://irc.freenode.net/joshfire">Joshfire IRC channel</a></li>
+              </ul>
+            </ul>
+          </div>
+
+          <div id="layout-content">
+            <!-- this will be replaced with the actual content of the page -->
+            <%- body %>
+
+            <!-- this lower simple pagination (previous, next) appears optionnaly --> 
+            <div class='docNavigation'>
+              <% if (locals.navPrev) { %>
+                <div class='docNavigationPrev'>
+                  <a href='<%= navPrev.url %>'>&larr; <%= navPrev.title %></a>
+                </div>
+              <% } %>
+              
+              <% if (locals.navNext) { %>
+                <div class='docNavigationNext'>
+                  <a href='<%= navNext.url %>'><%= navNext.title %> &rarr;</a>
+                </div>
+              <% } %>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div><!-- #page -->
+
+
+  <div id="colophon" class="josh-type-Panel josh-id-footer" style="display: block;">
+    <footer id="colophon" role="contentinfo">
+      <div class="wrapper">
+        <div id="site-generator">
+          (CC) 2012 <strong>Joshfire</strong>.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+.documentation a {
+    color: #266AAD;
+}
+.documentation figure {
+    margin: 20px 0;
+    text-align: center;
+}
+.documentation figure img {
+    max-width: 100%;
+}
+.documentation figcaption {
+    display: block;
+    font-style: italic;
+    padding-top: 10px;
+    text-align: center;
+}
+.help-panel {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.1);
+    float: right;
+    margin: 0 0 1em 1em;
+    padding: 0.5em;
+    width: 40%;
+}
+.help-name h2 {
+    margin-top: 0;
+}
+.documentation {
+    margin-top: 23px;
+}
+#submenu, #submenu ul, #submenu li, #submenu a {
+    height: 23px;
+}
+#submenu {
+    background: none repeat scroll 0 0 #BEBEBE;
+}
+#submenu ul {
+    margin: 0;
+    padding: 0;
+}
+#submenu li {
+    float: left;
+    list-style: none outside none;
+}
+#submenu li a {
+    color: #000000;
+    display: block;
+    font-family: 'Kreon',Times,serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 28px;
+    padding: 0 10px;
+    text-transform: uppercase;
+}
+#submenu .current_page_item {
+    background: none repeat scroll 0 0 #F0F0F0;
+}
+#examples-list .pic {
+    float: left;
+    margin: 1em 0;
+    width: 200px;
+}
+#examples-list h2 {
+    margin-bottom: 0;
+}
+#examples-list h2, #examples-list h3, #examples-list .cat, #examples-list .desc {
+    margin-left: 220px;
+}
+#examples-list .cat {
+    font-size: 16px;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-top: -5px;
+}
+.josh-id-content_download form {
+    margin: auto;
+    width: 50%;
+}
+.josh-id-content_download .label label {
+    width: 20%;
+}
+.josh-id-content_download .label input {
+    width: 80%;
+}
+.josh-id-content_download .submit {
+    text-align: center;
+}
+.docNavigation {
+    border-top: 1px solid #C0C0C0;
+    clear: both;
+    margin-top: 40px;
+    padding: 20px;
+}
+.docNavigationPrev {
+    float: left;
+}
+.docNavigationNext {
+    float: right;
+}
+#download, #download:visited {
+    background: url("/img/overlay.png") repeat-x scroll 0 0 #222222;
+    border: 0 none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 14px 9px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+}
+#download:hover {
+    background-color: #111111;
+    color: #FFFFFF;
+}
+#download:active {
+    top: 1px;
+}
+pre code {
+    white-space: pre-wrap;
+}
+pre code a {
+    color: inherit !important;
+}
+dl {
+    margin-left: 1em;
+}
+dt {
+    text-decoration: underline;
+}
+dd {
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+}
+
+#navmenu{
+    float: right;
+    width: 230px;
+    padding: 10px;
+    margin: 0 0 10px 10px;
+    overflow: hidden;
+    background-color: #CCC;
+    border-radius: 5px;
+}
+.nav-categories{
+    margin-top: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+.nav-categories li{
+    margin-top: 5px;
+    font-size: 16px;
+    text-decoration: bold;
+}
+.nav-pages{
+    margin-top: 5px;
+    padding-left: 40px;
+    list-style-type: decimal;
+}
+.nav-pages li{
+    margin-top: 0;
+    font-size: 14px;
+    text-decoration: none;
+}

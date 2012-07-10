@@ -1,0 +1,61 @@
+<h1>Getting started with templates</h1>
+
+<h2>What is a template?</h2>
+
+<p><strong>Templates</strong> play a central role in the factory. Templates impose the layout and functionality of the generated Web application. They impose the types and number of datasources that the user can feed the Web application and what the Web application does with it. Templates also handle user interactions.</p>
+
+<p>Templates may be very different, from generic templates that handle all types of data and define a cross-device interface to specialized templates that focus on rendering a picture feed on TV sets. Templates address a specific user need.</p>
+
+
+<h2>Why develop a template?</h2>
+
+<p>You may wish to develop a template for your own private use, for a client project, to sell it to Web applications developers through the factory or for fame. The factory allows you to do any of these, providing the market place for Web application developers and the integration with datasources of all kinds.</p>
+
+<p>In particular, the visibility of the template you develop is entirely up to you. You may decide to keep your template private and thus be the only one who can see it and use it to build applications, or you may publish the template to the factory for use by others, for a given fee or free of charges.</p>
+
+<h2>Anatomy of a template</h2>
+
+<p>A template consists of:</p>
+<ul>
+  <li>A <a href="/doc/develop/manifest">manifest file</a> named <code>package.json</code> that describes the properties of the template. The factory uses the information contained in the manifest file to adjust the actions proposed through the user interface. The information exposed to the generated Web application also depends on the contents of the manifest file. The name and location of the manifest file cannot be changed. It must be <code>package.json</code> and the file must appear in the root folder of the template.</li>
+  <li>One or more <a href="/doc/develop/start">index file(s)</a> that serves as entry point for the Web application (<code>index.html</code> in the same folder as the manifest file is assumed unless overridden in manifest file). These entry points must be valid HTML5 files.</li>
+  <li>A set of resources (images, videos, JavaScript code, HTML pages, etc.)</li>
+  <li>The JavaScript logic of the Web application.</li>
+</ul>
+
+<p>A template runs on client devices and cannot include code that would require server-side execution.</p>
+
+<p><a href="/doc/develop/datasources">Datasources</a> and <a href="/doc/develop/options">configuration settings</a> selected by users are exposed to the template through a <code>Joshfire.factory</code> global object.</p>
+
+<h2>A minimal template</h2>
+
+<p>A minimal "Hello world!" template consists of two files in the same folder:</p>
+<ul>
+ <li>an <code>index.html</code> file that contains markup such as:
+ <pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Hello World&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Hi, there.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre></code></li>
+ <li>a <code>package.json</code> manifest file that contains the following code:
+ <pre><code class="json">{
+  "name": "hello-world",
+  "fullName": "Hello World!",
+  "version": "0.0.1",
+  "description": "Hello world minimal template. Displays a static 'Hello World!' message.",
+  "joshfire": {
+    "images": {
+      "small": "http://i.imgur.com/sm0MA.png",
+      "big": "http://i.imgur.com/x5NbC.png"
+    }
+  }
+}</code></pre>  
+ </li>
+</ul>
+
+<p>Such a minimal template does not support any datasource input and does not encapsulate any JavaScript logic. This example is essentially dull. The <a href="/doc/develop/manifest">templates documentation</a> explains how to create something more useful!</p>

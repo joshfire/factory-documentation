@@ -86,7 +86,7 @@
 }
 .docNavigation {
     border-top: 1px solid #C0C0C0;
-    clear: both;
+/*    clear: both; */
     margin-top: 40px;
     padding: 20px;
 }
@@ -133,13 +133,13 @@ dd {
 }
 
 #navmenu{
-    float: right;
-    width: 230px;
+    float: left;
+    width: 200px;
     padding: 10px;
-    margin: 0 0 10px 10px;
+    margin: -20px 10px 10px 0;
     overflow: hidden;
-    background-color: #CCC;
-    border-radius: 5px;
+    background-color: #BEBEBE;
+    border-radius: 0 0 24px 30px;
 }
 .nav-categories{
     margin-top: 0;
@@ -153,11 +153,26 @@ dd {
 }
 .nav-pages{
     margin-top: 5px;
-    padding-left: 40px;
-    list-style-type: decimal;
+    padding-left: 10px;
+    list-style-type: none;
 }
 .nav-pages li{
     margin-top: 0;
     font-size: 14px;
+    padding-left: 14px;
+    background-image:url('/img/glyphicons_223_thin_right_arrow.png');
+    background-position: 0 center;
+    background-repeat: no-repeat;
     text-decoration: none;
 }
+
+#layout-content{
+    margin-left: 230px;
+}
+
+/* fix for bullets eating up on the vertical menu bar 
+#layout-content ul,
+#layout-content ol{
+    list-style-position: inside;
+}
+*/

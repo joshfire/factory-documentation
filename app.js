@@ -26,8 +26,8 @@ app.configure('production', function(){
 
 /* The routes object describes all the pages accessible.
  * First level are categories : User guides, development, references
- * second are the pages. The page title is the one shown in the simple 
- * footer navigation div (next and previous). The file and folder attributes 
+ * second are the pages. The page title is the one shown in the simple
+ * footer navigation div (next and previous). The file and folder attributes
  * are both used for the path and the route.
  */
 var routes = [
@@ -35,10 +35,10 @@ var routes = [
     title: "Factory User Guide",
     pages: [
       {file: "templates", title: "Templates", children: ["template-detail", "template-import"]},
-      {file: "data", title: "Data"}, 
+      {file: "data", title: "Data"},
       {file: "preview", title: "Previewing your application"},
       {file: "addons", title: 'Add-ons'},
-      {file: "configuration", title: "Configuration", children: ["configuration-template"]}, 
+      {file: "configuration", title: "Configuration", children: ["configuration-template"]},
       {file: "payment", title: "Payment Page"},
       {file: "deploy", title: "Deploying your application"}
     ]
@@ -46,9 +46,9 @@ var routes = [
   { folder: "data",
     title: "Datasources User Guide",
     pages: [
-      {file: "flickr-photos", title:'Flickr'}, 
-      {file: "static-post", title: 'Static'}, 
-      {file: "twitter-tweets", title: 'Twitter'}, 
+      {file: "flickr-photos", title:'Flickr'},
+      {file: "static-post", title: 'Static'},
+      {file: "twitter-tweets", title: 'Twitter'},
       {file: "youtube-videos", title: 'Youtube'}
     ]
   },
@@ -56,30 +56,30 @@ var routes = [
     title: "Deploys User Guide",
     hideinmenu: true,
     pages: [
-      {file: "chromestore"}, 
+      {file: "chromestore"},
       {file: "iosbuild"}
     ]
   },
   { folder: "develop",
     title: "Template Development",
     pages: [
-      {file: "intro", title:"Getting started with templates"}, 
-      {file: "manifest", title:"Prepare a manifest file"}, 
-      {file: "start", title: "Create template entry point(s)"}, 
-      {file: "datasources", title: "Bind to datasources"}, 
+      {file: "intro", title:"Getting started with templates"},
+      {file: "manifest", title:"Prepare a manifest file"},
+      {file: "start", title: "Create template entry point(s)"},
+      {file: "datasources", title: "Bind to datasources"},
       {file: "devices", title:"Support multiple devices"},
       {file: "options", title:"Propose more configuration settings"},
-      {file: "submit", title: "Submit your template"}, 
+      {file: "submit", title: "Submit your template"},
       {file: "examples", title: "Examples"}
     ]
   },
   { folder: "datasources",
     title: "Datasources development",
     pages: [
-      {file: "intro", title:"Getting started with datasources"}, 
+      {file: "intro", title:"Getting started with datasources"},
       {file: "prepare", title:"Develop a custom datasource"},
       {file: "normalization", title:"Data normalization"},
-      {file: "datajslib", title:"The datajslib library"}, 
+      {file: "datajslib", title:"The datajslib library"},
       {file: "operators", title:"Datasources operators"},
       {file: "boilerplates", title: "Datasources boilerplates"}
     ]
@@ -87,10 +87,10 @@ var routes = [
   { folder: "ref",
     title: "References",
     pages: [
-      {file: "package", title: "Template Manifest Reference"}, 
+      {file: "package", title: "Template Manifest Reference"},
       {file: "templateapi", title: "Template API Reference"},
-      {file: "datasource", title: "Datasource item type reference"}, 
-      {file: "jsonform", title: "JSON Form Reference"}, 
+      {file: "datasource", title: "Datasource item type reference"},
+      {file: "jsonform", title: "JSON Form Reference"},
       {file: "styles", title: "Style Guidelines"}
     ]
   }
@@ -119,7 +119,7 @@ app.get('/doc/dev/:category/:page', function(req, res){
     return route.folder == req.params.category;
   });
   if(category) {
-    var page = _.find(category.pages, function(page) { 
+    var page = _.find(category.pages, function(page) {
       return page.file == req.params.page;
     });
     if(page) {
@@ -130,23 +130,23 @@ app.get('/doc/dev/:category/:page', function(req, res){
       if(pagePos > 0){
         var prevPage = category.pages[pagePos - 1];
         ejsOptions.navPrev = {
-          title: prevPage.title, 
+          title: prevPage.title,
           url: prevPage.file
         };
       }
       if(pagePos < category.pages.length - 1){
         var nextPage = category.pages[pagePos + 1];
         ejsOptions.navNext = {
-          title: nextPage.title, 
+          title: nextPage.title,
           url: nextPage.file
         };
       }
       //console.log(category.folder + " / " + page.file);
-      res.render(category.folder + "/" + page.file, ejsOptions);      
+      res.render(category.folder + "/" + page.file, ejsOptions);
     }
-  } 
+  }
 });
 
-app.listen(40023, function(){
+app.listen(process.env.PORT || 40023, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

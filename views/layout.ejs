@@ -14,7 +14,7 @@
 
 <body class="home page page-id-4 page-template page-template-page-home-php">
 
-  <script type="text/javascript" src="/js/underscore.min.js"></script>
+  <script type="text/javascript" src="/js/underscore-min.js"></script>
 
   <div id="branding" class="josh-type-Panel josh-id-header" style="display: block;">
     <header id="branding" role="banner">
@@ -31,7 +31,7 @@
               <ul id="menu-topmenu" class="menu">
                 <li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36 <%= currentPage.tab == 'home' ? 'current_page_item' : '' %>"><a href="/">Home</a></li>
 
-                <li id="menu-item-241" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-239 <%= currentPage.tab == 'doc' ? 'current_page_item' : '' %> menu-item-241"><a href="/doc/latest/">Documentation</a></li>
+                <li id="menu-item-241" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-239 <%= currentPage.tab == 'doc' ? 'current_page_item' : '' %> menu-item-241"><a href="/doc">Documentation</a></li>
                 <li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39 <%= currentPage.tab == 'support' ? 'current_page_item' : '' %>"><a href="/support">Support</a></li>
                
               </ul>
@@ -73,7 +73,7 @@
                     <ul class="nav-pages">
                       <% for (var pageIdx in category.pages) { %>
                         <% var page = category.pages[pageIdx]; %>
-                        <li><a href="<%= '/doc/dev/' + category.folder + '/' + page.file %>">
+                        <li><a href="<%= '/doc/' + category.folder + '/' + page.file %>">
                           <%= routes[catIdx].pages[pageIdx].title %>
                         </a></li>
                       <% } %>

@@ -160,14 +160,20 @@ dd {
     margin-top: 0;
     font-size: 14px;
     padding-left: 14px;
-    background-image:url('/img/glyphicons_223_thin_right_arrow.png');
+    /*background-image:url('/img/glyphicons_223_thin_right_arrow.png');
     background-position: 0 center;
     background-repeat: no-repeat;
+     */
+    padding-bottom:10px;
     text-decoration: none;
 }
 
-#layout-content{
-    margin-left: 230px;
+#layout-content {
+    margin-left: 240px;
+}
+
+.wrapper {
+    width:990px;
 }
 
 /* fix for bullets eating up on the vertical menu bar 

@@ -102,19 +102,30 @@ app.get('/', function(req, res){
   res.render("home", {currentPage: {tab:"home"}});
 });
 
-app.get("/doc/dev", function(req,res){
-  res.render("documentation", {currentPage: {tab:"doc"}});
-});
-
-app.get("/doc/latest", function(req,res){
-  res.render("documentation", {currentPage: {tab:"doc"}});
-});
-
 app.get('/support', function(req, res){
   res.render("support", {currentPage: {tab: "support"}});
 });
 
-app.get('/doc/dev/:category/:page', function(req, res){
+
+app.get("/doc/dev",function(req,res) {
+  res.redirect("/doc",301);
+});
+app.get("/doc/latest",function(req,res) {
+  res.redirect("/doc",301);
+});
+app.get("/doc/dev/*",function(req,res) {
+  res.redirect(req.url.replace("/doc/dev", "/doc"),301);
+});
+app.get("/doc/latest/*",function(req,res) {
+  res.redirect(req.url.replace("/doc/latest", "/doc"),301);
+});
+
+
+app.get("/doc", function(req,res){
+  res.render("documentation", {currentPage: {tab:"doc"}});
+});
+
+app.get('/doc/:category/:page', function(req, res){
   var category = _.find(routes, function(route) {
     return route.folder == req.params.category;
   });

@@ -1,17 +1,124 @@
 <h1>The <code>datajslib</code> library</h1>
 
-<p>The <code>datajslib</code> library exposes a series of libraries that you may want to use to ease the development of your datasource. The library is defined as a <a href="http://requirejs.org/docs/plugins.html">RequireJS plugin</a>: to use one of the underlying libraries, simply prefix its name with <code>datajslib!</code> and add it to the list of dependencies of your datasource. For instance, the following code uses <code>http</code> and <code>underscore</code>:</p>
-<pre><code class="javascript">define(['datajslib!http', 'datajslib!underscore'], function (http, _) {
+<p>The <code>datajslib</code> library exposes a series of libraries that eases the development of datasources. The library is defined as a <a href="http://requirejs.org/docs/plugins.html">RequireJS plugin</a>: to use one of the underlying libraries, simply prefix its name with <code>datajslib!</code> and add it to the list of dependencies of your datasource. For instance, the following code uses the <code>http</code> and <code>underscore</code> libraries:</p>
+<pre><code class="javascript">define([
+  'datajslib!http',
+  'datajslib!underscore'
+], function (http, _) {
   // Datasource code can now access properties and methods of http and _
 });</code></pre>
 
-<p>All of the libraries defined here run client-side as well as server-side. The underlying code may not be the same for client-side execution and server-side execution. The Factory switches
-to the appropriate version automatically.</p>
+<p>Libraries of the <code>datajslib</code> library may be used in different runtimes, within a browser, a node.js environment, a Win8 application runtime... The underlying code may not be the same depending on the runtime. The Factory takes care of shipping the right version of the library in the <strong>bootstratp script</strong> when the application is deployed.</p>
+
+
+<h2 id="list">Available libraries</h2>
+<ul>
+  <li><a href="#async"><code>async</code>: Asynchronous helper methods</a></li>
+  <li><a href="#base64"><code>base64</code>: Encode/Decode base64 strings</a></li>
+  <li><a href="#getobjkey"><code>getobjkey</code>: Retrieve the value or a nested property within an array</a></li>
+  <li><a href="#hashobject"><code>hashobject</code>: Compare objects with a hash</a></li>
+  <li><a href="#htmlparser"><code>htmlparser</code>: HTML/XML/RSS parsing</a></li>
+  <li><a href="#http"><code>http</code>: AJAX requests</a></li>
+  <li><a href="#iso8601"><code>iso8601</code>: Date manipulation</a></li>
+  <li><a href="#md5"><code>md5</code>: Message-Digest cryptographic hash function</a></li>
+  <li><a href="#pagination"><code>pagination</code>: Convert pagination parameters</a></li>
+  <li><a href="#runtime"><code>runtime</code>: Current runtime</a></li>
+  <li><a href="#sha1"><code>sha1</code>: SHA-1 cryptographic hash function</a></li>
+  <li><a href="#underscore"><code>underscore</code>: Utility belt</a></li>
+  <li><a href="#uri"><code>uri</code>: Resolve relative links</a></li>
+</ul>
+
+
+<h2 id="async"><code>async</code>: Asynchronous helper methods</h2>
+
+<p>This library exposes the <a href="https://github.com/caolan/async/">Async.js</a> open-source module. This utility module provides straightforward, powerful functions for working with asynchronous JavaScript.</p>
+
+
+<h2 id="base64"><code>base64</code>: Encode/Decode base64 strings</h2>
+
+<p>Use the <code>base64</code> library to encode a string in base64 or decode a base64 string.</p>
+
+<pre><code class="javascript">define(['datajslib!base64'], function (base64) {
+  var encoded = base64.encode('Not bad');
+  var decoded = base64.decode(encoded);
+
+  // Decoded should be the initial string
+  console.log('encoded', encoded, 'decoded', decoded);
+});
+</code></pre>
+
+<h3 id="base64-encode">The <code>encode</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Encodes the given string as base64</dd>
+
+  <dt>Parameters</dt>
+  <dd>The string to encode</dd>
+
+  <dt>Returns</dt>
+  <dd>The encoded string</dd>
+</dl>
+
+<h3 id="base64-decode">The <code>decode</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Decodes the given base64 encoded string</dd>
+
+  <dt>Parameters</dt>
+  <dd>The string to decode</dd>
+
+  <dt>Returns</dt>
+  <dd>The decoded string. The method throws an exception when the string cannot be decoded.</dd>
+</dl>
+
+
+<h2 id="getobjkey"><code>getobjkey</code>: Retrieve the value or a nested property within an array</h2>
+
+<p>It is sometimes useful to reference a property in a nested structure using some sort of path selector. The <code>getobjkey</code> library takes a dotted path as parameter and returns the value of the property that matches the requested path in the given object, <code>null</code> if not found.</p>
+
+<p>The library supports array through square brackets, e.g. <code>foo[1].bar</code> to retrieve the <code>bar</code property of the second <code>foo</code> element.</p>
+
+<pre><code class="javascript">define(['datajslib!getobjkey', function (getObjKey) {
+  var obj = {
+    foo: [
+      { bar: 'hello', baz: 'everybody' },
+      { bar: 'bonjour', baz: 'tout le monde' }
+    ],
+    desc: 'blah'
+  };
+  var val1 = getObjKey(obj, 'desc');          // returns 'blah'
+  var val2 = getObjKey(obj, 'foo[1].bar');    // returns 'bonjour'
+  var val3 = getObjKey(obj, 'I.dont.exist');  // returns null
+});
+</code></pre>
+
+
+<h2 id="hashobject"><code>hashobject</code>: Compare objects with a hash</h2>
+
+<p>Use this library to produce a "hash" for an object. The library returns a function that takes an object as parameter.The returned hash is the same no matter the order under which the object's properties appear to the running code (object properties are not ordered in JavaScript, which means that one cannot rely on the order or properties by default).</p>
+
+<pre><code class="javascript">define(['datajslib!hashobject'], function (hashobject) {
+  var hash1 = hashobject({ first: 'foo', second: 'bar' });
+  var hash2 = hashobject({ second: 'bar', first: 'foo' });
+  var shouldBeTrue = (hash1 === hash2);
+});
+</pre></code>
+
+<p>The library is mostly useful for comparison purpose. The returned hash is fairly long, use the <a href="#md5"><code>md5</code></a> or <a href="#sha1"><code>sha1</code></a> library to create a "real" cryptographic hash value out of the value returned by the <code>hashobject</code> library.</p>
+
+
+<h2 id="htmlparser"><code>htmlparser</code>: HTML/XML/RSS parsing</h2>
+
+<p>Since the code may run client-side or server-side, you cannot assume that the environment features an HTML/XML parser. In particular, regular DOM manipulation techniques are not available. The <code>htmlparser</code> library exposes the <a href="https://github.com/tautologistics/node-htmlparser/">node-htmlparser</a> parser, a forgiving HTML/XML/RSS parser written in JavaScript that runs client-side and server-side.</p>
+
+<p>Use this library to process data returned as XML, XML or HTML. Note that support for this library may be discontinued in the future as we investigate other ways to support client-side/server-side HTML parsing techniques.</p>
 
 
 <h2 id="http"><code>http</code>: AJAX requests</h2>
 
-<p>The HTTP module exposes a <code>request</code> method that makes it easy to issue asynchronous HTTP requests. It is a higher-level wrapper around the usual <a href="http://www.w3.org/TR/XMLHttpRequest/">XMLHttpRequest</a> object in a browser environment that supports JSONP requests.</p>
+<p>The HTTP library exposes a <code>request</code> method to issue asynchronous HTTP requests. It is a higher-level wrapper around the usual HTTP client library of the environment that calls the library, e.g. the <a href="http://www.w3.org/TR/XMLHttpRequest/">XMLHttpRequest</a> object in a browser environment or the <a href="http://nodejs.org/api/http.html#http_http_request_options_callback">http.request</a> method in node.js. You should always use the <code>http</code> library if your datasource needs to issue HTTP requests to guarantee that it can run everywhere.</p>
+
+<p>The library supports JSONP.</p>
 
 <h3 id="http-request">The <code>request</code> method</h3>
 <dl>
@@ -42,21 +149,6 @@ to the appropriate version automatically.</p>
 });</code></pre></dd>
 </dl>
 
-
-<h2 id="async"><code>async</code>: Asynchronous helper methods</h2>
-
-<p>This library exposes the <a href="">Async.js</a> open-source module. This utility module provides straightforward, powerful functions for working with asynchronous JavaScript.</p>
-
-
-<h2 id="underscore"><code>underscore</code>: Utility toolbelt</h2>
-
-<p>This library exposes the <a href="http://documentcloud.github.com/underscore/">Underscore</a> utility-belt. Underscore is a small (less than 4Kb once minified and gzipped) library that provides 60-odd functions to parse and manipulate common structures (collections, arrays, objects). Using underscore is recommended to increase compatibility. For instance <code>array.forEach</code> may not be supported in all browsers. Using <code>_.each</code> guarantees that your code runs everywhere.</p>
-
-<h2 id="htmlparser"><code>htmlparser</code>: HTML/XML/RSS parsing</h2>
-
-<p>Since the code may run client-side or server-side, you cannot assume that the environment features an HTML/XML parser. In particular, regular DOM manipulation techniques are not available. The <code>htmlparser</code> library exposes the <a href="https://github.com/tautologistics/node-htmlparser/">node-htmlparser</a> parser, a forgiving HTML/XML/RSS parser written in JavaScript that runs client-side and server-side.</p>
-
-<p>Use this library to process data returned as XML, XML or HTML. Note that support for this library may be discontinued in the future as we investigate other ways to support client-side/server-side HTML parsing techniques.</p>
 
 <h2 id="iso8601"><code>iso8601</code>: Date manipulation</h2>
 
@@ -171,7 +263,122 @@ var dstr = iso8601.fromDateNoTime(d);
 // dur is now the string 'PT01H23M45S'</code></pre></dd>
 </dl>
 
-<h2 id="more">Extending the list</h2>
+
+<h2 id="md5"><code>md5</code>: Message-Digest cryptographic hash function</h2>
+
+<p>Use this library to produce a cryptographic hash value that follows the MD5 algorithm. Note MD5 is good for hashing purpose but should not be used for security purpose as there exist security flaws. The function returned by the library expects a string as parameter and returns the MD5 value generated from the given string.</p>
+
+<pre><code class="javascript">define(['datajslib!md5'], function (md5) {
+  var hash = md5("Build cross-device apps within minutes with the Factory");
+});
+</pre></code>
+
+
+<h2 id="pagination"><code>pagination</code>: Convert pagination parameters</h2>
+
+<p>There exist different paradigms to implement pagination in an API. Some content providers use the same <code>skip</code> and <code>limit</code> parameters as the Factory (e.g. MongoDB) while others use <code>page</code> and <code>perPage</code> parameters. Switching from one system to the other is perhaps surprisingly not a trivial problem. The pagination library returns a helper method to ease the conversion between the second form and the first.</p>
+
+<h3 id="pagination-paginate">The <code>paginate</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Converts <code>skip</code> and <code>limit</code> parameters to <code>page</code> and <code>perPage</code> parameters.</dd>
+
+  <dt>Parameters</dt>
+  <dd>The method takes up to 5 parameters:
+  <ul>
+    <li><code>skip</code>: The number of items to skip</li>
+    <li><code>limit</code>: The number of items to return</li>
+    <li><code>maxPerPage</code>: The maximum number of items per page that the service provider accepts (optional)</li>
+    <li><code>maxPage</code>: The maximum number of pages that the service provider accepts (optional) (<code>maxPerPage</code> must be set when this parameter is set)</li>
+  </ul>
+  Note the method may return pagination parameters that exceed the given maxima when it cannot accomodate them.
+  </dd>
+
+  <dt>Returns</dt>
+  <dd>An object that has a <code>page</code> property (starting at 1), a <code>perPage</code> property and a <code>skip</code> property that tells the caller the number of items to skip in the final list of entries returned by the service provider.</dd>
+  </dd>
+
+  <dt>Example</dt>
+  <dd><pre><code class="javascript">define(['datajslib!pagination', function (pagination) {
+    // Computing pagination parameters to get
+    // 20 items skipping the first 40 of them
+    var skip = 40;
+    var limit = 20;
+    var p = pagination.paginate(skip, limit, 100, 100);
+
+    // Fetching items from the service provider
+    // (hypothetical function that returns the list of items that match
+    // the given pagination parameters)
+    fetchItemsFromServiceProvider(p.page, p.perPage, function (items) {
+      if (p.skip) items = items.slice(p.skip);
+      items = items.slice(0, limit);
+      // "items" now contains the items we were looking for
+    });
+  });
+  </pre></code>
+</dl>
+
+
+<h2 id="runtime"><code>runtime</code>: Current runtime</h2>
+
+<p>Use the runtime library to retrieve information about the current runtime. This is typically useful when you need to implement things slightly differently from one runtime to another.</p>
+
+<pre><code class="javascript">define(['datajslib!runtime'], function (runtime) {
+  if (runtime.name === 'browser') {
+    // Browser runtime
+  }
+  else if (runtime.name === 'nodejs') {
+    // Node.js runtime
+  }
+  else if (runtime.name === 'win8') {
+    // Win8 runtime
+  }
+  else {
+    // datajs server-side runtime
+  }
+});
+</code></pre>
+
+<h2 id="sha1"><code>sha1</code>: SHA-1 cryptographic hash function</h2>
+
+<p>Use this library to produce a cryptographic hash value that follows the MD5 algorithm. SHA-1 is more secure than MD5 although there are known security flaws. The function returned by the library expects a string as parameter and returns the SHA-1 value generated from the given string.</p>
+
+<pre><code class="javascript">define(['datajslib!sha1'], function (sha1) {
+  var hash = sha1("Build cross-device apps within minutes with the Factory");
+});
+</pre></code>
+
+
+<p>Use this library to produce a cryptographic hash value that follows the MD5 algorithm. Note MD5 is good for hashing purpose but should not be used for security purpose as there exist security flaws. The function returned by the library expects a string as parameter and returns the MD5 value generated from the given string.</p>
+
+<pre><code class="javascript">define(['datajslib!md5'], function (md5) {
+  var hash = md5("Build cross-device apps within minutes with the Factory");
+});
+</pre></code>
+
+
+<h2 id="underscore"><code>underscore</code>: Utility toolbelt</h2>
+
+<p>This library exposes the <a href="http://documentcloud.github.com/underscore/">Underscore</a> utility-belt. Underscore is a small (less than 4Kb once minified and gzipped) library that provides 60-odd functions to parse and manipulate common structures (collections, arrays, objects). Using underscore is recommended to increase compatibility. For instance <code>array.forEach</code> may not be supported in all browsers. Using <code>_.each</code> guarantees that your code runs everywhere.</p>
+
+
+<h2 id="uri"><code>uri</code>: Resolve relative links</h2>
+
+<p>The <code>uri</code> exposes a URI class with a number of functions to manipulate them, in particular to resolve an URI against a base URI according to rules defined in <a href="http://tools.ietf.org/html/rfc3986">RFC3986</a>.</p>
+
+<pre><code class="javascript">define(['datajslib!uri'], function (URI) {
+  var baseUri = new URI('http://developer.joshfire.com');
+  var relativeUri = new URI('/doc/datasources/datajslib');
+  var uriStr = baseUri.resolveReference(relativeUri).toString();
+
+  // uriStr now contains 'http://developer.joshfire.com/doc/datasources/datajslib'
+});
+</code></pre>
+
+<p>The library exposes the <a href="https://github.com/webr3/URI/">URI Type for javascript</a> library. Check the code for more info.</p>
+
+
+<h2 id="more">Expanding the list</h2>
 
 <p>You may wonder why a particular library is missing from the list. Main reasons are usually that:</p>
 <ul>

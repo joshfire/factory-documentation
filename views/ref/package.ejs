@@ -67,6 +67,10 @@
         ]
       }
     ],
+    "<a href="#hooks">hooks</a>": [
+      "<em>list</em>",
+      "<em>item</em>"
+    ],
     "<a href="#options">options</a>": {
       "schema": {
         "abouthtml": {
@@ -552,6 +556,29 @@
 <h2 id="template-options">Template options</h2>
 
 <p>In addition to datasources, templates may propose to customize the Web application through options (see <a href="/doc/develop/options">Propose more configuration settings</a>).</p>
+
+
+<h3 id="hooks"><code>hooks</code></h3>
+
+<dl>
+  <dt>Description</dt>
+  <dd>List of hooks triggered by the template (or exposed by the add-on)</dd>
+  <dt>Usage</dt>
+  <dd>Add-ons must use this property to list the hooks they expose. Templates should use this property to list the hooks that they may trigger so that add-ons may adjust their behavior accordingly (for instance, an add-on that handles the <code>share</code> user action may render a "Share" button on its own if the template does not trigger the <code>share</code> hook and leave it up to the template if it does)</dd>
+
+  <dt>JSON type</dt>
+  <dd>An array of strings. See <a href="/doc/addons/hooks">available hooks</a> for possible values.</dd>
+
+  <dt>Example</dt>
+  <dd><pre><code class="json">"hooks: [
+  "item",
+  "share"
+]</pre></code></dd>
+
+  <dt>Required?</dt>
+  <dd>Yes for add-ons and for templates when that trigger at least one hook</dd>
+</dl>
+
 
 <h3 id="options"><code>options</code></h3>
 

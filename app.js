@@ -69,8 +69,19 @@ var routes = [
       {file: "datasources", title: "Bind to datasources"},
       {file: "devices", title:"Support multiple devices"},
       {file: "options", title:"Propose more configuration settings"},
+      {file: "addons", title: "Support add-ons"},
       {file: "submit", title: "Submit your template"},
       {file: "examples", title: "Examples"}
+    ]
+  },
+  { folder: "addons",
+    title: "Add-ons development",
+    pages: [
+      {file: "intro", title: "Getting started with add-ons"},
+      {file: "manifest", title: "Add-on manifest file"},
+      {file: "hooks", title: "Available hooks"},
+      {file: "inapp", title: "In-app hook handlers"},
+      {file: "deploy", title: "Deploy hook handlers"}
     ]
   },
   { folder: "datasources",
@@ -82,16 +93,6 @@ var routes = [
       {file: "datajslib", title:"The datajslib library"},
       {file: "operators", title:"Datasources operators"},
       {file: "boilerplates", title: "Datasources boilerplates"}
-    ]
-  },
-  { folder: "addons",
-    title: "Add-ons development",
-    pages: [
-      {file: "intro", title: "Getting started with add-ons"},
-      {file: "manifest", title: "Add-on manifest file"},
-      {file: "hooks", title: "Available hooks"},
-      {file: "inapp", title: "In-app hook handlers"},
-      {file: "deploy", title: "Deploy hook handlers"}
     ]
   },
   { folder: "ref",

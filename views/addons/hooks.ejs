@@ -1,0 +1,79 @@
+<h1>Available hooks</h1>
+
+<p>There are two types of hooks: those triggered when the application runs and those triggered when the application is deployed. The first types of hooks enhance the contents and functionality of the application. The second types of hooks are triggered once and typically update the assets of the application being deployed. The hook handler that the add-on must expose depends on the type of the underlying hook.</p>
+
+
+<h2 id="inapp">In-app hooks</h2>
+
+<p>In-app hooks can in turn be divided into two main categories:</p>
+<ul>
+  <li><strong>widget hooks</strong> are triggered to react to an action initiated by the template itseld and enhance the contents and layout of the application;</li>
+  <li><strong>user intent hooks</strong> are triggered to react to an action initiated by the application user, perform the corresponding action and report on its result to the template.</li>
+</ul>
+
+<p>There is no guarantee that a given template will support all existing hooks. Templates should list the in-app hooks they trigger in their manifest file.</p>
+
+<p>Check <a href="/doc/addons/inapp">in-app hook handlers</a> for a code boilerplate that you may use to define an in-app hook handler.</p>
+
+
+<h3 id="inapp-item"><code>item</code>: An item has been rendered</h3>
+
+<p>The <code>item</code> hook is triggered when an item is rendered. Templates should trigger the hook once the item has been rendered if possible, before rendering the item if not.</p>
+
+<p>The <code>item</code> hook is a <strong>widget hook</strong>.</p>
+
+
+<h3 id="inapp-list"><code>list</code>: A list of items has been rendered</h3>
+
+<p>The <code>list</code> hook is triggered when a list of items is rendered. Templates should trigger the hook once the list has been rendered if possible, before rendering the list if not.</p>
+
+<p>The <code>list</code> hook is a <strong>widget hook</strong>.</p>
+
+
+<h3 id="inapp-share"><code>share</code>: The user wants to share data from the current page</h3>
+
+<p>This <strong>user intent hook</strong> is one of the default intents defined by the <a href="http://webintents.org/">Web Intents</a> Web site. It should be triggered when the user wants to share the item or list of items currently rendered on the screen.</p>
+
+
+<h3 id="inapp-edit"><code>edit</code>: The user wants to edit data from the current page</h3>
+
+<p>This <strong>user intent hook</strong> is one of the default intents defined by the <a href="http://webintents.org/">Web Intents</a> Web site. It should be triggered when the user wants to edit the item or list of items currently rendered on the screen.</p>
+
+
+<h3 id="inapp-like"><code>like</code>: The user wants to "like" the data on the current page</h3>
+
+<p>This <strong>user intent hook</strong> is one of the verbs defined by the <a href="http://activitystrea.ms/specs/json/schema/activity-schema.html#verbs">Activity Streams Base Schema</a> specification. It should be triggered when the user wants to like the data rendered on the screen.</p>
+
+
+<h3 id="inapp-extending">Extending the list of in-app hooks</h3>
+
+<p>While the goal is to stick to a minimal set of hooks, note the list of hooks can easily be extended. To avoid name collisions, URIs should be used for all hooks that are not defined in the above list.</p>
+
+<!-- TODO: we need to decouple the hook names and the filenames when URIs are used as "http://webintents.org/save" is not a valid filename. In the manifest file, this can typically be done by allowing the list of hooks to be keys as before or e.g. { "action": "http://webintents.org/save", "href": "save.js" } -->
+
+
+<h2 id="deploy">Deploy hooks</h2>
+
+<p>Deploy hooks are triggered when the application is deployed. Add-ons may use these hooks to reference additional external style sheets or JavaScript libraries, or to inject HTML markup directly within the application. Add-ons should be extremely careful in the updates they make to the application so as not to break the resulting application.</p>
+
+<p>Deploy hooks run server-side on the Factory. For security reasons, the use of deploy hooks is restricted to authorized developers for the time being. Please <a href="/doc/support">get in touch</a> if you need to use these hooks in your add-on.</p>
+
+<p>Check <a href="/doc/addons/deploy">Deploy hook handlers</a> for implementation details.</p>
+
+
+<h3 id="deploy-bootstrap"><code>bootstrap</code>: Inject JavaScript code in the bootstrap script</h3>
+
+<p>The <code>bootstrap</code> hook is triggered when the bootstrap script is being assembled. The hook handler receives the contents of the bootstrap script in <code>params.content</code> and may complete the script as needed. This is typically useful to inject additional code logic in the script.</p>
+
+<p>Add-ons should not expect that the DOM will be fully loaded when the bootstrap script is loaded.</p>
+
+
+<h3 id="deploy-startfile"><code>startfile</code>: Inject HTML markup in the application's start file</h3>
+
+<p>The <code>startfile</code> hook is triggered when the start file of the application is being assembled. The hook handler receives the contents of the start file in <code>params.content</code> and may inject additional markup as needed, typically using one of the helper methods exposed in the <code>runtime</code> parameter. The <code>startfile</code> hook is typicaly useful to inject additional styles definition and/or static content within the application.</p>
+
+
+<h3 id="xcodeproj"><code>xcodeproj</code>: Update xcode project</h3>
+
+<p>The <code>xcodeproj</code> hook is triggered when an application is deployed for the iOS platform. Through the <code>runtime</code> parameter, the hook handler may update the Xcode project settings as needed.</p>
+

@@ -1,0 +1,97 @@
+<h1>Prepare an add-on manifest file</h1>
+
+<p>All add-ons must include a top-level manifest file called <code>package.json</code> that describes the add-on.</p>
+
+<p>Except for the <code>hooks</code> property that lists the hooks supported by the add-on and a few additional optional properties, the manifest file of an add-on is the same as the manifest file of a template. Check <a href="/doc/develop/manifest">Prepare a manifest file</a> to get started and the <a href="/doc/ref/package">template manifest file reference</a> for details.</p>
+
+
+<h2 id="hooks">The <code>hooks</code> property</h2>
+
+<p>In the manifest file, the <code>hooks</code> property defines the list of hooks that the add-on wants to register for. The property sits under the <code>joshfire</code> property and must be an array of strings.</p>
+
+<pre><code class="javascript">{
+  "name": "listanditems",
+  "fullName": "List and items",
+  "version": "1.0.0",
+  "description": "Runs when an item or a list of items is rendered.",
+  "joshfire": {
+    "hooks": [
+      "list",
+      "item"
+    ]
+  }
+}
+</code></pre>
+
+<p>The Factory uses the list of hooks defined in the manifest file to return the right add-ons when the template calls the <code>Joshfire.factory.getAddOns</code> method for a given hook, so remember to set that property accordingly!</p>
+
+<p>Check <a href="/doc/addons/hooks">available hooks</a> for the list of hooks that you may register for in the <code>hooks</code> property. The number of hooks is kept to a minimum on purpose: the fewer the hooks, the easier for templates to support add-ons. If you feel that a useful hook is missing, please <a href="/doc/support">get in touch</a>!</p>
+
+<p>Also note that hooks that run when the application is deployed are restricted to authorized developers for the time being for security reasons. Again, feel free to <a href="/doc/support">get in touch</a> if you need to use such hooks.</p>
+
+
+<h2 id="intent">The <code>intent</code> property</h2>
+
+<p>When the add-on is able to handle an action on the user's behalf, the <code>intent</code> property should be set to the action the add-on may handle.</p>
+
+<p>TODO: complete based on intent vs. hook decision</p>
+
+
+<h2 id="viewmodes">The <code>viewmodes</code> property</h2>
+
+<p>Use the <code>viewmodes</code> property to specify the preferred view modes for your add-on. Possible values are taken from <a href="http://www.w3.org/TR/view-mode/#view-modes">The 'view-mode' Media Feature standard</a>:</p>
+<ul>
+  <li><code>windowed</code>: default execution mode. The add-on is rendered in a section of the page.</li>
+  <li><code>floating</code>: the add-on should be rendered as an overlay on top of the initial application.</li>
+  <li><code>fullscreen</code>: the add-on should occupy the entirety of the screen area.</li>
+</ul>
+
+<p>That list may be completed over time. Templates should do their best to accommodate one of the view modes in the list starting from the first one. Add-ons should not assume that they will run in any of the suggested view modes though.</p>
+
+<pre><code class="javascript">{
+  "name": "videoplayer",
+  "fullName": "Video player",
+  "version": "1.0.0",
+  "description": "Plays a video.",
+  "joshfire": {
+    "hooks": [ "item" ],
+    "viewmodes": [
+      "fullscreen",
+      "floating"
+    ]
+  }
+}
+</code></pre>
+
+
+<h2 id="position">The <code>position</code> property</h2>
+
+<p>Use the <code>position</code> property to specify the preferred position for your add-on on screen. Templates should do their best to accommodate the suggested position. Add-ons should not assume that this will be the case though.</p>
+
+<p>Possible values are:</p>
+<ul>
+  <li><code>top</code>: the add-on should be rendered before the content</li>
+  <li><code>right</code>: the add-on should be rendered on the right side of the content</li>
+  <li><code>bottom</code>: the add-on should be rendered on after the content</li>
+  <li><code>left</code>: the add-on should be rendered on the left side of the content</li>
+</ul>
+
+<p>The <code>position</code> property only makes sense when the add-on is rendered in the <code>windowed</code> view mode.</p>
+
+
+<!--
+<h2 id="sizes">The <code>sizes</code> property</h2>
+
+<p>Use the <code>sizes</code> property to specify the preferred dimensions for the add-on.</p>
+
+<p>TBD. Possible values are:</p>
+<ul>
+  <li><code>xx-small</code></li>
+  <li><code>x-small</code></li>
+  <li><code>small</code></li>
+  <li><code>medium</code>: default value</li>
+  <li><code>large</code></li>
+  <li><code>x-large</code></li>
+  <li><code>xx-large</code></li>
+</ul>
+-->

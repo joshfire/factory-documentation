@@ -84,6 +84,16 @@ var routes = [
       {file: "boilerplates", title: "Datasources boilerplates"}
     ]
   },
+  { folder: "addons",
+    title: "Add-ons development",
+    pages: [
+      {file: "intro", title: "Getting started with add-ons"},
+      {file: "manifest", title: "Add-on manifest file"},
+      {file: "hooks", title: "Available hooks"},
+      {file: "inapp", title: "In-app hook handlers"},
+      {file: "deploy", title: "Deploy hook handlers"}
+    ]
+  },
   { folder: "ref",
     title: "References",
     pages: [

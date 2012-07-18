@@ -1,0 +1,65 @@
+<h1>Getting started with add-ons</h1>
+
+<h2>What is an add-on?</h2>
+
+<p><strong>Add-ons</strong> enhance templates, providing additional functionality like ad banners, analytics, "like" buttons, "save content" or the like.</p>
+
+<p>Add-ons may do something in the background, and/or render content on screen. Add-ons apply to one or more <strong>hooks</strong> and get called accordingly, either by the Factory when an application is deployed or at key moments during the execution of an application, typically when an item or a list of items is rendered.</p>
+
+<p>As much as possible, add-ons that need to render content on screen should follow responsive Web design patterns as there cannot know in advance the size of the viewport that they will have to fit into. They should also limit their impact on their host template to a bare minimum, e.g. using namespacing in CSS and code to ensure they do not override precious definitions.</p>
+
+<p>Templates <em>should</em> support add-ons by calling the appropriate hooks when needed. Some of them may not support add-ons though.</p>
+
+
+<h2>Why develop an add-on?</h2>
+
+<p>Add-ons are immensely useful to provide a functionality that most templates might use. You may wish to develop an add-on for your own private use within your templates and applications, or to sell it to other Web applications developers through the Factory.</p>
+
+<p>As for templates, the visibility of the add-on you develop is entirely up to you. You may decide to keep your add-on private and thus be the only one who can see it and use it to enhance applications, or you may publish the add-on to the factory for use by others, for a given fee or free of charges.</p>
+
+
+<h2>Anatomy of an add-on</h2>
+
+<p>An add-on shares many similarities with templates. Addon-ons consist of:</p>
+<ul>
+  <li>A <a href="/doc/develop/manifest">manifest file</a> named <code>package.json</code> that describes the properties of the add-on. The factory uses the information contained in the manifest file to adjust the actions proposed through the user interface. The information exposed to the generated Web application also depends on the contents of the manifest file. The name and location of the manifest file cannot be changed. It must be <code>package.json</code> and the file must appear in the root folder of the add-on.</li>
+  <li>One Javascript file named after each hook registered in the manifest file. These files must appear in the root folder of the add-on. Each hook handler must be defined as an <a href="https://github.com/amdjs/amdjs-api/wiki/AMD">AMD module</a>.</li>
+  <li>Zero or more resource files, including additional JavaScript files.</li>
+</ul>
+
+<p>A template runs on client devices and cannot include code that would require server-side execution.</p>
+
+<p><a href="/doc/develop/datasources">Datasources</a> and <a href="/doc/develop/options">configuration settings</a> selected by users are exposed to the template through a <code>Joshfire.factory</code> global object.</p>
+
+<h2>A minimal add-on</h2>
+
+<p>A minimal add-on consists of two files in the same folder:</p>
+<ul>
+ <li>an <code>item.js</code> file that contains code such as:
+ <pre><code class="javascript">define([], function () {
+  // The module returns a factory that creates the handler
+  // initialized with the given configuration options
+  return function (config) {
+    // At a minimum, the object returned must define an asynchronous
+    // "generate" function that returns the markup of the add-on.
+    return {
+      generate: function (options, callback) {
+        return callback(null, '&lt;div&gt;The add-on says "Ni!"&lt;/div&gt;');
+      }
+    };
+  };
+});</code></pre></li>
+ <li>a <code>package.json</code> manifest file that contains the following code:
+ <pre><code class="json">{
+  "name": "ni",
+  "fullName": "Ni!",
+  "version": "0.0.1",
+  "description": "An add-on that says 'Ni!' when an item is rendered.",
+  "joshfire": {
+    "hooks": [ "item" ]
+  }
+}</code></pre>
+ </li>
+</ul>
+
+<p>Once imported in the Factory and applied to a template that supports add-ons, this code would simply inject the message <em>The add-on says "Ni!"</em> in the page. The position where the message appears in the page is imposed by the template.</p>

@@ -1,0 +1,146 @@
+<h1>In-app hook handlers</h1>
+
+<p>There are two main categories of in-app hooks: those triggered to enhance the layout of an application and those triggered to handle a specific user action. The interface exposed by the hook handler depends on the category of the underlying hook.</p>
+
+
+<h2 id="layout">Hook handlers that enhance the layout of an application</h2>
+
+<p>Hook handlers that listen to the <code>list</code> or <code>item</code> hook fall in the category of handlers that enhance the layout of an application. Such handlers produce markup. Templates are responsible for injecting the markup produced by the add-on in the page.</p>
+
+<p>Here is an annotated boilerplate:</p>
+
+<pre><code class="javascript">/**
+ * @fileoverview Hook handler boilerplate for an in-app hook that produces
+ * HTML markup.
+ *
+ * The handler must be defined as an AMD module. Dependencies to other add-on
+ * javascript files, if any, must start with "./"
+ */
+define([], function () {
+  /**
+   * The module returns a factory method that creates a hook handler
+   * initialized with the given configuration options.
+   *
+   * The configuration options are those entered by the Factory user
+   * in the add-on configuration pane. They follow the schema defined
+   * in the manifest file's "options" property (if any).
+   */
+  return function (config) {
+    return {
+      /**
+       * Performs the add-on's main action and calls the callback method
+       * once done with a potential error and/or the HTML markup string
+       * that should be injected in the application.
+       *
+       * This method is mandatory. It should never throw exceptions.
+       * It may return null if the add-on does not produce any HTML markup.
+       *
+       * @function
+       * @param {Object} options Contextual information. The template
+       *  should set the "data" property to the item or list of items
+       *  being rendered (as returned by a call to the underlying
+       *  datasource's "find" method) and "dataEl" to the DOM element
+       *  that contains the item or list of items that has just been
+       *  rendered. The add-on code should not assume that these
+       *  properties are available, though.
+       * @param {function} callback Callback function to call once
+       *  generation is over. First parameter is a potential error,
+       *  second error the generate HTML markup string.
+       */
+      generate: function (options, callback) {
+        return callback(null, '&lt;p&gt;Me gusta&lt;/p&gt;');
+      },
+
+      /**
+       * Enhances the generated DOM content with additional logic, for
+       * instance to bind event handlers to the created element as needed.
+       *
+       * This method is optional. It should never throw exceptions.
+       *
+       * @function
+       * @param {Element} el The DOM element that contains the HTML block
+       *  that was produced by the generate method.
+       * @param {Object} options Context options. The template should typically
+       *  set the "data" property to the item or list that triggered the hook,
+       *  as well as the "dataEl" property to the HTML element that renders
+       *  the item or list if it is available.
+       */
+      enhance: function (el, options) {
+        // Bind potential event handler, e.g.
+        el.addEventListener('click', function (evt) { });
+      }
+    };
+  };
+});
+</code></pre>
+
+<p>In short and prose, the hook handler must be defined as an AMD module that exposes a factory method. The factory method receives the configuration parameters set by the user in the add-on configuration pane on the Factory as parameter and returns an instance of the hook handler. The hook handler must define a <code>generate</code> method that returns the HTML markup to insert in the DOM and may define an <code>enhance</code> method to enhance the corresponding DOM element once the template has inserted the markup in the DOM.</p>
+
+<p>The <code>generate</code> method may call the callback with a <code>null</code> value if it does not need to generate markup for the context it received in the <code>options</code> parameter. The template should pass the following context to the add-on:</p>
+<ul>
+  <li><code>data</code>: The item or the list of items that has just been rendered. Each item should be normalized according to the <a href="/doc/datasources/normalization">Data normalization</a> rules. Items returned by datasources can typically be passed as-is.</li>
+  <li><code>dataEl</code>: The DOM element that contains the rendered item or list of items.</li>
+</ul>
+
+<p>Add-ons should not rely on <code>data</code> and <code>dataEl</code>. Templates may not be able to set the context properly, for instance because they cannot easily point to a normalized version of the item being rendered or because they need to trigger the add-on before rendering.</p>
+
+<p>Even though add-ons have access to the DOM through the <code>window</code> object as well as to the global scope of an application, they should not interfere with either of them unless absolutely needed.</p>
+
+
+<h2 id="useraction">Hook handlers that execute a user action</h2>
+
+<p>Hook handlers that execute a user action are triggered when the user wants to perform a particular action, typically by clicking on a button rendered by the template. The template delegates the execution of the action to the add-on that can execute it. This lets templates propose additional functionalities to their user, such as a way to share a link, to like an item, or to save something while at the same time leaving the exact definition of the action to the third-party add-on that handles the action.</p>
+
+<p>Here is an annotated boilerplate:</p>
+
+<pre><code class="javascript">/**
+ * @fileoverview Hook handler boilerplate for an in-app hook that executes
+ * a user action.
+ *
+ * The handler must be defined as an AMD module. Dependencies to other add-on
+ * javascript files, if any, must start with "./"
+ */
+define([], function () {
+  /**
+   * The module returns a factory method that creates a hook handler
+   * initialized with the given configuration options.
+   *
+   * The configuration options are those entered by the Factory user
+   * in the add-on configuration pane. They follow the schema defined
+   * in the manifest file's "options" property (if any).
+   */
+  return function (config) {
+    return {
+      /**
+       * Performs the add-on's main action and calls one of the callback
+       * methods once done with the result of the action.
+       *
+       * This method is mandatory. It should never throw exceptions.
+       * Returned data depends on the action (i.e. the hook) considered.
+       *
+       * Note the use of a success callback and of a failure callback
+       * as opposed to the usual "callback with error as first parameter"
+       * paradigm, as the method follows the Web Intents specification:
+       * http://www.w3.org/TR/web-intents/#invocation-api
+       *
+       * @function
+       * @param {Object} intent User intent description. The template
+       *  should set the "data" property to the appropriate data structure
+       *  for the action to perform in particular.
+       * @param {function} successCallback callback method to call when
+       *  the activity is a success.
+       * @param {function} failureCallback callback method to call when
+       *  the activity results in an error.
+       */
+      startActivity: function (intent, successCallback, failureCallback) {
+        // Identity action that does not transform anything
+        return successCallback(intent.data);
+      }
+    };
+  };
+});
+</code></pre>
+
+<p>For those familiar with <a href="http://www.w3.org/TR/web-intents/">Web Intents</a>, hook handlers that execute a user action may be viewed as a Service, user action hooks being named after the intent action that one would find in Web Intents. The main difference between Web Intents and Factory hook handlers that execute a user action is that the choice of the Service that performs the action is up to the Factory user that creates the application, whereas it is up to the end user in the case of Web intents. The <code>startActivity</code> method is directly taken from the Web Intents specification.</p>
+
+<p>Templates should at least set the <code>data</code> property of the <a href="http://dvcs.w3.org/hg/web-intents/raw-file/tip/spec/Overview.html#intent-object">intent object</a>, and are encouraged to set the <code>type</code> property as well.</p>

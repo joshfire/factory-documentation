@@ -1,0 +1,148 @@
+<h1>Deploy hook handlers</h1>
+
+<p>Deploy hooks are triggered by the Factory when the application is deployed. For security reasons, such hooks are restricted to authorized developers for the time being. Please <a href="/support">get in touch</a> if you need to use them.</p>
+
+
+<h2 id="boilerplate">Boilerplate</h2>
+
+<p>Here is an annotated boilerplate for a deploy hook handler:</p>
+
+<pre><code class="javascript">/**
+ * @fileoverview Hook handler boilerplate for a deploy hook.
+ *
+ * The handler must be defined as an AMD module. Dependencies to other add-on
+ * javascript files, if any, must start with "./"
+ */
+define([], function () {
+  /**
+   * The module must return a function that takes the add-on runtime,
+   * context parameters and a callback function as parameters. A potential
+   * error may be given as parameter to the callback function.
+   */
+  return function (runtime, params, callback) {
+    // Do something to the package
+    return callback();
+  };
+});
+</code></pre>
+
+<p>Properties and methods exposed by the <code>runtime</code> and <code>params</code> parameters depend on the category of hooks. See below for details.</p>
+
+
+<h2 id="runtime">The add-on runtime</h2>
+
+<p>Deploy hook handlers run server-side in a restricted JavaScript environment. The <code>runtime</code> parameter exposes a few helpful functions to interact with the content, and in particular read local assets and inject HTML markup in the content.</p>
+
+<h3 id="runtime-readFile">The <code>readFile</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Reads a local text file and returns its content</dd>
+
+  <dt>Parameters</dt>
+  <dd>The method takes the path to the file to read, relative to the root folder of the add-on and a callback method that receives the potential error and/or the contents of the file.</dd>
+
+  <dt>Example</dt>
+  <dd>Here is an example of a <code>startfile</code> hook handler that injects styles from a local stylesheet in the start file of the application:
+  <pre><code class="javascript">define ([], function () {
+  return function (runtime, params, callback) {
+    runtime.readFile('res/styles.css', function (err, styles) {
+      if (err) return callback(err);
+      params.content = runtime.headAppend(params.content,
+        '&lt;style type="text/css"&gt;' + styles + '&lt;/style&gt;');
+      callback(null, params.content);
+    });
+  };
+});</code></pre></dd>
+</dl>
+
+<h3 id="runtime-headAppend">The <code>headAppend</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Appends content right before the end of the &lt;head&gt; tag.
+  <br/>The method only makes sense for the <code>startfile</code> hook.</dd>
+
+  <dt>Parameters</dt>
+  <dd>The method expects the HTML markup string to complete as first parameter and the content to inject as second parameter.</dd>
+
+  <dt>Example</dt>
+  <dd>Here is an example of a <code>startfile</code> hook handler that injects a script at the end of the HTML head
+  <pre><code class="javascript">define ([], function () {
+  return function (runtime, params, callback) {
+    var newContent = runtime.headAppend(params.content,
+      '&lt;script type="text/javascript"&gt;alert("I am in!");&lt;/script&gt;');
+    return callback(null, newContent);
+  };
+});</code></pre></dd>
+</dl>
+
+<h3 id="runtime-linkPrepend">The <code>linkAppend</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Injects content right before the first &lt;link&gt; tag found in the HTML.
+  <br/>The method only makes sense for the <code>startfile</code> hook.</dd>
+
+  <dt>Parameters</dt>
+  <dd>The method expects the HTML markup string to complete as first parameter and the content to inject as second parameter.</dd>
+
+  <dt>Example</dt>
+  <dd>Here is an example of a <code>startfile</code> hook handler that injects CSS before the first link tag
+  <pre><code class="javascript">define ([], function () {
+  return function (runtime, params, callback) {
+    var newContent = runtime.linkPrepend(params.content,
+      '&lt;link rel="stylesheet" type="text/css" href="http://example.org/styles.css"/&gt;');
+    return callback(null, newContent);
+  };
+});</code></pre></dd>
+</dl>
+
+<h3 id="runtime-scriptPrepend">The <code>scriptPrepend</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Injects content right before the first &lt;script&gt; tag found in the HTML.
+  <br/>The method only makes sense for the <code>startfile</code> hook.</dd>
+
+  <dt>Parameters</dt>
+  <dd>The method expects the HTML markup string to complete as first parameter and the content to inject as second parameter.</dd>
+
+  <dt>Example</dt>
+  <dd>Here is an example of a <code>startfile</code> hook handler that injects a script before any other scripts
+  <pre><code class="javascript">define ([], function () {
+  return function (runtime, params, callback) {
+    var newContent = runtime.scriptPrepend(params.content,
+      '&lt;script type="text/javascript"&gt;alert("I am first!");&lt;/script&gt;');
+    return callback(null, newContent);
+  };
+});</code></pre></dd>
+</dl>
+
+<h3 id="runtime-scriptPrepend">The <code>scriptAppend</code> method</h3>
+<dl>
+  <dt>Description</dt>
+  <dd>Injects content right after the last &lt;script&gt; tag found in the HTML.
+  <br/>The method only makes sense for the <code>startfile</code> hook.</dd>
+
+  <dt>Parameters</dt>
+  <dd>The method expects the HTML markup string to complete as first parameter and the content to inject as second parameter.</dd>
+
+  <dt>Example</dt>
+  <dd>Here is an example of a <code>startfile</code> hook handler that injects a script after all other scripts
+  <pre><code class="javascript">define ([], function () {
+  return function (runtime, params, callback) {
+    var newContent = runtime.scriptPrepend(params.content,
+      '&lt;script type="text/javascript"&gt;alert("I am last!");&lt;/script&gt;');
+    return callback(null, newContent);
+  };
+});</code></pre></dd>
+</dl>
+
+
+<h3 id="runtime-specific">Deploy-specific runtime methods</h3>
+
+<p>The runtime exposed to the hook handler may expose deploy-specific methods, for instance methods to read and write to the info.plist file for Xcode project deploys. These additional methods will be documented here over time.</p>
+
+
+<h2 id="params">The <code>params</code> parameter</h2>
+
+<p>The <code>params</code> parameter that the hook handler receives contains information about the context of execution. Its main properties are <code>content</code> (see previous examples) that contains the content to act upon, and <code>options</code> that contains the add-on configuration options as set by the user in the add-on configuration pane on the Factory.</p>
+
+<p>Additionally, the <code>deploy</code> property provides information about the current deployment options.</p>

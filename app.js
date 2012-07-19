@@ -63,7 +63,7 @@ var routes = [
   { folder: "develop",
     title: "Template Development",
     pages: [
-      {file: "intro", title:"Getting started with templates"},
+      {file: "intro", title:"Getting started"},
       {file: "manifest", title:"Prepare a manifest file"},
       {file: "start", title: "Create template entry point(s)"},
       {file: "datasources", title: "Bind to datasources"},
@@ -77,7 +77,7 @@ var routes = [
   { folder: "addons",
     title: "Add-ons development",
     pages: [
-      {file: "intro", title: "Getting started with add-ons"},
+      {file: "intro", title: "Getting started"},
       {file: "manifest", title: "Add-on manifest file"},
       {file: "hooks", title: "Available hooks"},
       {file: "inapp", title: "In-app hook handlers"},

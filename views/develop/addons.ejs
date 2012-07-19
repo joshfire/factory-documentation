@@ -1,8 +1,129 @@
 <h1>Support add-ons</h1>
 
-<p>TBD</p>
+<p>Add-ons may enhance your template with typical functionalities such as analytics, ads, a weather display, or some way to comment on an item or to share a link. Add-ons integrate in templates through hooks. Some of these hooks are automatically triggered by the Factory or the bootstrap script, which means that you do not have anything to do on your side to support e.g. the Google Analytics add-on. Other hooks need to be triggered by your template such as the "item" hook that needs to be triggered when your template renders the details of an item on screen.</p>
 
-<p>Joshfire.factory.getAddOns</p>
-<p>render</p>
-<p>generate, setContent, enhance (probably not needed to start with)</p>
-<p>startActivity</p>
+<p>See <a href="/doc/addons/hooks">available hooks</a> to learn more about hooks and in particular about the difference between <strong>widget hooks</strong> and <strong>user intent hooks</strong>. This page explains how to trigger such hooks within your template.</p>
+
+<h2 id="getAddOns">The <code>Joshfire.factory.getAddOns</code> method</h2>
+
+<p>The <code>Joshfire.factory.getAddOns</code> method is always available to templates. It returns the list of add-ons that matches the given hook. For instance, the following code would retrieve the list of installed add-ons that are registered for the <code>item</code> hook.</p>
+
+<pre><code class="javascript">var addons = Joshfire.factory.getAddOns('item');
+</code></pre>
+
+
+<h2 id="widget">Triggering widget hooks</h2>
+
+<p>Triggering widget hooks is an easy three-step process:</p>
+<ol>
+  <li>Perform the underlying action as usual, keeping a pointer to the item or list of items being rendered and to the DOM element that receives this item or list of items</li>
+  <li>Retrieve the list of add-ons that registered for the hook through a call to <code>Joshfire.factory.getAddOns</code></li>
+  <li>Tell the add-ons to perform their action and render themselves in the DOM</li>
+</ol>
+
+<h3 id="widget-boilerplate">Boilerplate to trigger widget hooks</h3>
+<p>Here is a boilerplate for an <code>item</code> hook:</p>
+
+<pre><code class="javascript">// 1. Render a datasource item named "item" in "dataEl"
+// (dataEl may be a CSS selector or the DOM element itself)
+// Actual code depends on your template
+var context = {
+  data: item,
+  dataEl: '#item'
+};
+
+// 2. Retrieve the list of add-ons for the "item" hook
+var addons = Joshfire.factory.getAddOns('item');
+
+// 3. Tell the add-ons to run and render themselves somewhere in the DOM
+// (el may be a CSS selector or the DOM element itself)
+var el = '#addons';
+addons.render(el, context, function (err) {
+  // Done rendering add-ons  
+});
+</code></pre>
+
+
+<h3 id="widget-render">The <code>render</code> method</h3>
+
+<p>Each add-on exposes a <code>render</code> method that runs the add-on and tells it to render itself in the given DOM element.</p>
+
+<dl>
+  <dt>Description</dt>
+  <dd>Runs the add-on and renders the result in the given DOM element.
+  <br/>The add-on appends the generated content to the end of the given DOM element by default (it may replace the whole content if "replaceContent" is set).</dd>
+
+  <dt>Parameters</dd>
+  <dd><ul>
+    <li><code>el</code>: the DOM element or the CSS selector to the DOM element that is to contain the generated HTML as first parameter</li>
+    <li><code>options</code>: context information. Possible properties to set are:
+    <ul>
+      <li><code>data</code> to the item or list of items that has just been rendered</li>
+      <li><code>dataEl</code> to the DOM element (or appropriate CSS selector) that contains the rendered item or list of items</li>
+      <li><code>replaceContent</code> to <code>true</code> the generated HTML is to replace the content of the DOM element given as first parameter (and not to be appended to it).</li>
+    </ul></li>
+    <li><code>callback</code>: a callback function that will be called once the add-on is done rendering.</li>
+  </ul></dd>
+</dl>
+
+<p>The list of add-ons also exposes a <code>render</code> method that follows the same signature (except that the <code>replaceContent</code> parameter cannot be set, the method replaces the contents of the given DOM element no matter what).</p>
+
+
+<h2 id="userintent">Triggering user intent hooks</h2>
+
+<p>User intent hooks are typically bound to a user action, such as a click on a button. Again, triggering such hooks is an easy three-step process:</p>
+<ol>
+  <li>Retrieve the list of add-ons that registered for the user intent hook</li>
+  <li>Tell the add-ons to handle the action and report on the result</li>
+  <li>Do something with the result (or not)</li>
+</ol>
+
+<p>Here is a boilerplate for a <code>like</code> hook:</p>
+<pre><code class="javascript">// 1. Retrieve the list of add-ons for the "like" hook
+var addons = Joshfire.factory.getAddOns('like');
+
+// 2. Let the add-ons handle the action and report on the resul
+addons.startActivity(
+  { data: item },
+  function (result) {
+    // 3. Do something with the result, whose structure depends on the action.
+  },
+  function (err) {
+    // 3bis. Something went wrong
+  }
+);
+</code></pre>
+
+
+<h2 id="improving">Improving support for add-ons</h2>
+
+<p>Add-ons are of all kinds and some of them may define special recommendations such as their position in the page, or their preferred mode of execution (e.g. fullscreen or floating). Whenever possible, your template should accommodate these needs.</p>
+
+<p>For instance, adjusting the widget boilerplate to support positioning might lead to:</p>
+
+<pre><code class="javascript">// 1. Render a datasource item named "item" in "dataEl"
+// (dataEl may be a CSS selector or the DOM element itself)
+// Actual code depends on your template
+// Note the use of "appendContent" that tells the render content to append
+// the generated HTML to the end of the DOM element as opposed to replacing
+// its content entirely.
+var context = {
+  data: item,
+  dataEl: '#item'
+};
+
+// 2. Retrieve the list of add-ons for the "item" hook
+var addons = Joshfire.factory.getAddOns('item');
+
+// 3. Tell the add-ons to run and render themselves somewhere in the DOM
+// (el may be a CSS selector or the DOM element itself)
+// (note the render function is asynchronous, if you need to detect the
+// end, consider using an async library such as async.js)
+var addon = null;
+var position = null;
+for (var i = 0; i < addons.length; i++) {
+  addon = addons[i];
+  position = addon.config.position || 'bottom';
+  addon.render('#addons-' + position, context);
+}
+</code></pre>

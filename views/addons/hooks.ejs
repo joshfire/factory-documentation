@@ -30,6 +30,17 @@
 <p>The <code>list</code> hook is a <strong>widget hook</strong>.</p>
 
 
+<h3 id="inapp-loaded"><code>loaded</code>: The application is ready</h3>
+
+<p>The <code>loaded</code> hook is triggered when the application is fully operational, in other words when it is done loading assets and initializing data. Templates should trigger the hook once the home page is available. This hook is typically used by splash screen add-ons to hide themselves.</p>
+
+<p>The <code>loaded</code> hook comes with additional rules to guarantee that the hook gets triggered no matter what:</p>
+<ul>
+  <li>If the template asserts that it supports the <code>loaded</code> (in other words, if <code>loaded</code> appears in the <code>hooks</code> property of the template's manifest file), it <strong>must</strong> trigger it. The application may not work otherwise (e.g. a potential splash screen would never disappear).</li>
+  <li>The <code>loaded</code> hook is automatically triggered when the DOM is ready if the template does not support it.</li>
+</ul>
+
+
 <h3 id="inapp-share"><code>share</code>: The user wants to share data from the current page</h3>
 
 <p>This <strong>user intent hook</strong> is one of the default intents defined by the <a href="http://webintents.org/">Web Intents</a> Web site. It should be triggered when the user wants to share the item or list of items currently rendered on the screen.</p>

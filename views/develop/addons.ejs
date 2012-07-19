@@ -4,15 +4,8 @@
 
 <p>See <a href="/doc/addons/hooks">available hooks</a> to learn more about hooks and in particular about the difference between <strong>widget hooks</strong> and <strong>user intent hooks</strong>. This page explains how to trigger such hooks within your template.</p>
 
-<h2 id="getAddOns">The <code>Joshfire.factory.getAddOns</code> method</h2>
 
-<p>The <code>Joshfire.factory.getAddOns</code> method is always available to templates. It returns the list of add-ons that matches the given hook. For instance, the following code would retrieve the list of installed add-ons that are registered for the <code>item</code> hook.</p>
-
-<pre><code class="javascript">var addons = Joshfire.factory.getAddOns('item');
-</code></pre>
-
-
-<h2 id="widget">Triggering widget hooks</h2>
+<h2 id="widget">Trigger widget hooks</h2>
 
 <p>Triggering widget hooks is an easy three-step process:</p>
 <ol>
@@ -22,7 +15,7 @@
 </ol>
 
 <h3 id="widget-boilerplate">Boilerplate to trigger widget hooks</h3>
-<p>Here is a boilerplate for an <code>item</code> hook:</p>
+<p>Here is a boilerplate that you may use to trigger an <code>item</code> hook:</p>
 
 <pre><code class="javascript">// 1. Render a datasource item named "item" in "dataEl"
 // (dataEl may be a CSS selector or the DOM element itself)
@@ -69,7 +62,7 @@ addons.render(el, context, function (err) {
 <p>The list of add-ons also exposes a <code>render</code> method that follows the same signature (except that the <code>replaceContent</code> parameter cannot be set, the method replaces the contents of the given DOM element no matter what).</p>
 
 
-<h2 id="userintent">Triggering user intent hooks</h2>
+<h2 id="userintent">Trigger user intent hooks</h2>
 
 <p>User intent hooks are typically bound to a user action, such as a click on a button. Again, triggering such hooks is an easy three-step process:</p>
 <ol>
@@ -78,11 +71,13 @@ addons.render(el, context, function (err) {
   <li>Do something with the result (or not)</li>
 </ol>
 
-<p>Here is a boilerplate for a <code>like</code> hook:</p>
+<h3 id="userintent-boilerplate">Boilerplate to trigger user intent hooks</h3>
+<p>Here is a boilerplate that you may use to trigger a <code>like</code> hook:</p>
+
 <pre><code class="javascript">// 1. Retrieve the list of add-ons for the "like" hook
 var addons = Joshfire.factory.getAddOns('like');
 
-// 2. Let the add-ons handle the action and report on the resul
+// 2. Let the add-ons handle the action and report on the result
 addons.startActivity(
   { data: item },
   function (result) {
@@ -93,6 +88,32 @@ addons.startActivity(
   }
 );
 </code></pre>
+
+<h3 id="userintent-startActivity">The <code>startActivity</code> method</h3>
+
+<p>Add-on that handle a user intent hook expose a <code>startActivity</code> method that matches the signature of the startActivity method defined in the <a href="http://www.w3.org/TR/web-intents/#invocation-api">Web Intents</a> specification.</p>
+
+<dl>
+  <dt>Description</dt>
+  <dd>Execute the user action and report on the result</dd>
+
+  <dt>Parameters</dt>
+  <dd><ul>
+    <li><code>intent</code>: The user intent. Properties that should be set:
+    <ul>
+      <li><code>data</code>: The intent data, typically the item on which the intent should be executed, the URL to share, or something else. The actual data depends on the intent.</li>
+      <li><code>type</code>: The data payload, defined as a MIME string or a self-documenting URL. Again, the type dependson on the intent.</li>
+    </ul></li>
+    <li><code>onSuccess</code>: callback method called upon success with the result of the activity. The structure of the returned result depends on the intent.</li>
+    <li><code>onFailure</code>: callback method called upon failure with the error.</li>
+  </ul></dd>
+</dl>
+
+<h2 id="hooks">Declare supported hooks in manifest file</h2>
+
+<p>All the hooks your template trigger should be listed in the manifest file. Add-ons may use that information to adjust their behavior (for instance, an add-on that handles the "like" hook may render a "I like this" button for the "item" hook if the template does not trigger the "like" hook). Additionally, the Factory will use that information to filter add-ons that are compatible with your template.</p>
+
+<p>The list of hooks must be defined in the <code><a href="/doc/ref/package#hooks">hooks</a></code> property.</p>
 
 
 <h2 id="improving">Improving support for add-ons</h2>
@@ -127,3 +148,12 @@ for (var i = 0; i < addons.length; i++) {
   addon.render('#addons-' + position, context);
 }
 </code></pre>
+
+
+<h2 id="getAddOns">The <code>Joshfire.factory.getAddOns</code> method</h2>
+
+<p>The <code>Joshfire.factory.getAddOns</code> method is always available to templates. It returns the list of add-ons that matches the given hook. For instance, the following code would retrieve the list of installed add-ons that are registered for the <code>item</code> hook.</p>
+
+<pre><code class="javascript">var addons = Joshfire.factory.getAddOns('item');
+</code></pre>
+

@@ -135,7 +135,7 @@ dd {
 #navmenu{
     float: left;
     width: 200px;
-    padding: 10px;
+    padding: 10px 0;
     margin: -20px 10px 10px 0;
     overflow: hidden;
     background-color: #BEBEBE;
@@ -146,6 +146,11 @@ dd {
     padding-left: 0;
     list-style-type: none;
 }
+.nav-categories p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
 .nav-categories li{
     margin-top: 5px;
     font-size: 16px;
@@ -153,18 +158,19 @@ dd {
 }
 .nav-pages{
     margin-top: 5px;
-    padding-left: 10px;
+    padding-left: 0;
     list-style-type: none;
 }
 .nav-pages li{
     margin-top: 0;
     font-size: 14px;
-    padding-left: 14px;
+    padding-left: 16px;
     /*background-image:url('/img/glyphicons_223_thin_right_arrow.png');
     background-position: 0 center;
     background-repeat: no-repeat;
      */
-    padding-bottom:10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-decoration: none;
 }
 
@@ -174,6 +180,16 @@ dd {
 
 .wrapper {
     width:990px;
+}
+
+.nav-pages .active {
+    background-color: #DEDEDE;
+    padding-left: 3px;
+}
+.active:before {
+    float: left;
+    content: '\25B8';
+    padding-right: 5px;
 }
 
 /* fix for bullets eating up on the vertical menu bar 

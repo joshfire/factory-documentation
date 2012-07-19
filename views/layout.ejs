@@ -66,13 +66,17 @@
               <% for (var catIdx in routes) { %>
                 <% var category = routes[catIdx]; %>
                 <% if (!category.hideinmenu) { %>
-                  <li><%= category.title %>
+                  <li><p><%= category.title %></p>
                     <ul class="nav-pages">
                       <% for (var pageIdx in category.pages) { %>
                         <% var page = category.pages[pageIdx]; %>
+                        <% if ((currentPage.category === category.folder) && (currentPage.page === page.file)) { %>
+                        <li class="active"><%= routes[catIdx].pages[pageIdx].title %></li>
+                        <% } else { %>
                         <li><a href="<%= '/doc/' + category.folder + '/' + page.file %>">
                           <%= routes[catIdx].pages[pageIdx].title %>
                         </a></li>
+                        <% } %>
                       <% } %>
                     </ul>
                   </li>

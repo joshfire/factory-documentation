@@ -5,7 +5,7 @@
 
 <h2 id="layout">Hook handlers that enhance the layout of an application</h2>
 
-<p>Hook handlers that listen to the <code>list</code> or <code>item</code> hook fall in the category of handlers that enhance the layout of an application. Such handlers produce markup. Templates are responsible for injecting the markup produced by the add-on in the page.</p>
+<p>Hook handlers that listen to the <code>loaded</code>, <code>list</code> or <code>item</code> hook fall in the category of handlers that enhance the layout of an application. Such handlers produce markup. Templates are responsible for injecting the markup produced by the add-on in the page.</p>
 
 <p>Here is an annotated boilerplate:</p>
 
@@ -144,3 +144,48 @@ define([], function () {
 <p>For those familiar with <a href="http://www.w3.org/TR/web-intents/">Web Intents</a>, hook handlers that execute a user action may be viewed as a Service, user action hooks being named after the intent action that one would find in Web Intents. The main difference between Web Intents and Factory hook handlers that execute a user action is that the choice of the Service that performs the action is up to the Factory user that creates the application, whereas it is up to the end user in the case of Web intents. The <code>startActivity</code> method is directly taken from the Web Intents specification.</p>
 
 <p>Templates should at least set the <code>data</code> property of the <a href="http://dvcs.w3.org/hg/web-intents/raw-file/tip/spec/Overview.html#intent-object">intent object</a>, and are encouraged to set the <code>type</code> property as well.</p>
+
+
+<h2 id="adjusting">Adjust behavior based on template's hook support</h2>
+
+<p>If your add-on supports a user intent hook such as <code>share</code>, you may also want to support the <code>item</code> widget hook to render a "Share this" button if the template does not trigger the <code>share</code> hook. However, your add-on should not generate that button if the template takes care of it.</p>
+
+<p>You may take a look a the template configuration object exposed in <code><a href="/doc/ref/templateapi#template-settings">Joshfire.factory.config.template</a></code> to decide whether to render the button or not. Typically, the list of hooks triggered by the template is available in <code>Joshfire.factory.config.template.hooks</code>.</p>
+
+<p>The <code>item</code> hook handler for the above "share" add-on could thus be written as:</p>
+
+<pre><code class="javascript">
+define([], function () {
+  // Short helper function that returns true when "val" is in the given array
+  var include = function (array, val) {
+    if (!array) return false;
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] === val) return true;
+    }
+    return false;
+  }
+
+  return function (config) {
+    return {
+      /**
+       * The "item" hook handler generates a button if the template does not
+       * support the "share" hook. If does nothing otherwise
+       */
+      generate: function (options, callback) {
+        if (include(Joshfire.factory.config.template.hooks, 'share')) {
+          return callback();
+        }
+        else {
+          return callback(null, '&lt;button&gt;Share this&lt;/button&gt;');
+        }
+      },
+
+      enhance: function (el, options) {
+        el.addEventListener('click', function (evt) {
+          // Share the item
+        });
+      }
+    };
+  };
+});
+</code></pre>

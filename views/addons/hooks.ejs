@@ -1,5 +1,7 @@
 <h1>Available hooks</h1>
 
+<p><strong>Important</strong>: Add-on development is restricted to authorized developers for the time being while we stabilize APIs. Please <a href="/support">get in touch</a> to suggest additional features or add-ons.</p>
+
 <p>There are two types of hooks: those triggered when the application runs and those triggered when the application is deployed. The first types of hooks enhance the contents and functionality of the application. The second types of hooks are triggered once and typically update the assets of the application being deployed. The hook handler that the add-on must expose depends on the type of the underlying hook.</p>
 
 
@@ -66,8 +68,6 @@
 <h2 id="deploy">Deploy hooks</h2>
 
 <p>Deploy hooks are triggered when the application is deployed. Add-ons may use these hooks to reference additional external style sheets or JavaScript libraries, or to inject HTML markup directly within the application. Add-ons should be extremely careful in the updates they make to the application so as not to break the resulting application.</p>
-
-<p>Deploy hooks run server-side on the Factory. For security reasons, the use of deploy hooks is restricted to authorized developers for the time being. Please <a href="/doc/support">get in touch</a> if you need to use these hooks in your add-on.</p>
 
 <p>Check <a href="/doc/addons/deploy">Deploy hook handlers</a> for implementation details.</p>
 

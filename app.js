@@ -33,6 +33,7 @@ app.configure('production', function(){
 var routes = [
   { folder: "create",
     title: "Factory User Guide",
+    context: "docs",
     pages: [
       {file: "templates", title: "Templates", children: ["template-detail", "template-import"]},
       {file: "data", title: "Data"},
@@ -45,6 +46,7 @@ var routes = [
   },
   { folder: "data",
     title: "Datasources User Guide",
+    context: "docs",
     pages: [
       {file: "flickr-photos", title:'Flickr'},
       {file: "static-post", title: 'Static'},
@@ -54,6 +56,7 @@ var routes = [
   },
   { folder: "deploy",
     title: "Deploys User Guide",
+    context:"docs",
     hideinmenu: true,
     pages: [
       {file: "chromestore"},
@@ -62,6 +65,7 @@ var routes = [
   },
   { folder: "develop",
     title: "Template Development",
+    context:"developer",
     pages: [
       {file: "intro", title:"Getting started"},
       {file: "manifest", title:"Prepare a manifest file"},
@@ -76,6 +80,7 @@ var routes = [
   },
   { folder: "addons",
     title: "Add-ons development",
+    context:"developer",
     pages: [
       {file: "intro", title: "Getting started"},
       {file: "manifest", title: "Add-on manifest file"},
@@ -86,6 +91,7 @@ var routes = [
   },
   { folder: "datasources",
     title: "Datasources development",
+    context:"developer",
     pages: [
       {file: "intro", title:"Getting started with datasources"},
       {file: "prepare", title:"Develop a custom datasource"},
@@ -97,6 +103,7 @@ var routes = [
   },
   { folder: "ref",
     title: "References",
+    context:"developer",
     pages: [
       {file: "package", title: "Template Manifest Reference"},
       {file: "templateapi", title: "Template API Reference"},
@@ -108,6 +115,21 @@ var routes = [
 ];
 
 app.set('view options', {routes: routes});
+
+
+/**
+ * For All requests, check the domain name and determine if the are in "docs" or "developer" mode
+ */
+app.get('/*', function (req, res, next){
+  var context = null;
+  var referrer = req.header('Referrer');
+
+  if(referrer.indexOf("docs") > 0) { context = "docs"; }
+  else if(referrer.indexOf("developer") > 0) { context = "developer"; }
+
+  res.local("context", context);
+  next();
+});
 
 app.get('/', function(req, res){
   res.render("home", {currentPage: {tab:"home"}});

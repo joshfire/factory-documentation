@@ -65,7 +65,7 @@
             <ul class="nav-categories">
               <% for (var catIdx in routes) { %>
                 <% var category = routes[catIdx]; %>
-                <% if (!category.hideinmenu) { %>
+                <% if (!category.hideinmenu && (!context || category.context === context)) { %>
                   <li><p><%= category.title %></p>
                     <ul class="nav-pages">
                       <% for (var pageIdx in category.pages) { %>

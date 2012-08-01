@@ -60,7 +60,8 @@ var routes = [
     hideinmenu: true,
     pages: [
       {file: "chromestore"},
-      {file: "iosbuild"}
+      {file: "iosbuild"},
+      {file: "win8project"}
     ]
   },
   { folder: "develop",

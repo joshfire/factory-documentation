@@ -59,9 +59,9 @@ var routes = [
     context:"docs",
     hideinmenu: true,
     pages: [
-      {file: "chromestore"},
-      {file: "iosbuild"},
-      {file: "androidproj"}
+      {file: "chromestore", title:"Chrome Store"},
+      {file: "iosbuild", title:"iOS Build"},
+      {file: "androidproj", title:"Android project"}
     ]
   },
   { folder: "develop",

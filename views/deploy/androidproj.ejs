@@ -1,0 +1,33 @@
+<h1>Android project deploy</h1>
+
+<h2>Description</h2>
+
+<p>
+	The <i>Android project</i> deploy creates an Android project that you can open in Eclipse. You will then need to build yourself the application into an Android .apk.
+</p>
+
+<h2>How to open the project in Eclipse</h2>
+<p>
+	You should have the <a href="http://developer.android.com/sdk/installing/index.html">Android SDK</a> and <a href="http://developer.android.com/sdk/installing/installing-adt.html">ADT Plugin for Eclipse</a> installed. You should have the API level 15 SDK installed.
+	<br/>
+	Here are the steps to import your project into Eclipse and build it:
+	<ul>
+		<li>Extract the content of the downloaded archive in a folder</li>
+		<li>Open Eclipse</li>
+		<li>Create a new Android project (File > New > Project... Android Project, or just click on the "New Android" project icon)</li>
+		<li>Select "Create project from existing source"</li>
+		<li>Select the location of your extracted project folder</li>
+		<li>Click Next</li>
+		<li>Select Android 4.0.3 as SDK target</li>
+		<li>Click Finish</li>
+		<li>Right click on the new project in the left bar, select Properties</li>
+		<li>Go to "Java Build Path", Libraries</li>
+		<li>Click Add JARs</li>
+		<li>Select "cordova-2.0.0.jar" in the libs folder of your project</li>
+		<li>Click OK</li>
+		<li>Plug your device with a USB cable</li>
+		<li>Select your project in the left bar</li>
+		<li>Click the "Run As" green icon in the toolbar.</li>
+		<li>Select Android Application</li>
+	</ul>
+</p>

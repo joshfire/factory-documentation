@@ -165,13 +165,21 @@ app.get('/doc/:category/:page', function(req, res){
   var category = _.find(routes, function(route) {
     return route.folder == req.params.category;
   });
-  if(category) {
-    var page = _.find(category.pages, function(page) {
-      return page.file == req.params.page;
+  if(category) {
+    var page = _.find(category.pages, function(page) {
+      return (page.file == req.params.page) || (page.children && _.include(page.children, req.params.page));
     });
+
+    var child;
+    if(page.children && _.include(page.children, req.params.page)) {
+      child = req.params.page;
+    }
+
+    console.log(child);
+
     if(page) {
       var ejsOptions = {
-        currentPage: {tab:"doc", category: category.folder, page: page.file}
+        currentPage: {tab:"doc", category: category.folder, page: child || page.file}
       };
       var pagePos = _.indexOf(category.pages, page);
       if(pagePos > 0){
@@ -189,7 +197,7 @@ app.get('/doc/:category/:page', function(req, res){
         };
       }
       //console.log(category.folder + " / " + page.file);
-      res.render(category.folder + "/" + page.file, ejsOptions);
+      res.render(category.folder + "/" + (child || page.file), ejsOptions);
     }
   }
 });

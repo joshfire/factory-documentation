@@ -1,2 +1,86 @@
 <h1>Windows 8 Visual Studio project</h1>
 
+<h2>Description</h2>
+
+<p>
+  The <i>Windows 8 Visual Studio project</i> deploy lets you generate a Visual Studio 2012 project ready to be compiled and tested on your Windows 8 devices. If you want to make it available in the Windows Store, you will have to do the process yourself.
+<p>
+<p>
+  You need a copy of Visual Studio 2012 installed and ready to run. If you don't have one, you can download it from <a href="http://www.microsoft.com/visualstudio/11/">Microsoft's website</a>.
+</p>
+
+<h2>Configuration</h2>
+
+<p>
+  Most parameters are self explanatory. Here are the few catchs.
+</p>
+
+<h3>Devices</h3>
+
+<p>
+  You should always select Desktop.
+</p>
+
+<h3>Logos</h3>
+
+<p>
+  A default logo is provided if needed, but the logo is what makes your app distinguishable on the Metro desktop, so you really should have your own. If you provide a logo, but no small logo, we will use it to make a small version.
+</p>
+
+<p>
+  The images you provide should have the required sizes, we don't resize them.
+</p>
+
+<h2>Building and testing the app</h2>
+
+<p>
+  One downloaded the zip file, you will have to open the project into Visual Studio, associate a test certificate, and launch it. Here's how to do it.
+</p>
+
+<p>
+  Open the project. Windows may issue a Security Warning : that's because the app has been downloaded from the Internet.
+</p>
+
+<figure>
+  <img src="/img/win8project-1-trust.png" alt="Screenshot of the Security warning" />
+  <figcaption>Read security warning and accept opening</figcaption>
+</figure>
+
+<p>
+  Then, open the package manifest, and associate a test certificate.
+</p>
+
+<figure>
+  <img src="/img/win8project-2-find.png" alt="Screenshot of the package.appxmanifest opening" />
+  <figcaption>Open the package.appxmanifest file</figcaption>
+</figure>
+
+<figure>
+  <img src="/img/win8project-3-packaging.png" alt="Screenshot of the packaging tab" />
+  <figcaption>Select the packaging tab</figcaption>
+</figure>
+
+<figure>
+  <img src="/img/win8project-4-choose-certificate.png" alt="Screenshot of the Choose certificate button" />
+  <figcaption>Click "Choose Certificate..."</figcaption>
+</figure>
+
+<figure>
+  <img src="/img/win8project-6-create-test-certificate.png" alt="Screenshot of the Choose certificate dialog" />
+  <figcaption>Select "Create test certificate..."</figcaption>
+</figure>
+
+<figure>
+  <img src="/img/win8project-7-create-test-certificate-dlg.png" alt="Screenshot of the Create test certificate dialog" />
+  <figcaption>Publisher ID should be set to your username, Password can be left blank</figcaption>
+</figure>
+
+<figure>
+  <img src="/img/win8project-7-done.png" alt="Screenshot of the resulting packaging tab" />
+  <figcaption>The "Publisher" field should be updated with you certificate</figcaption>
+</figure>
+
+<figure>
+  <img src="/img/win8project-8-start-debug.png" alt="Screenshot of the Start Debugging menu" />
+  <figcaption>You can now launch your application to test it</figcaption>
+</figure>

@@ -17,13 +17,32 @@
 <h2>Configuration</h2>
 
 <p>
-	The four configuration parameters are very important for your application to run on your device:
+	The four configuration parameters are very important for your application to run on the targetted devices:
 </p>
+
+<h3>Build type</h3>
+
+<h4>Development</h4>
+<p>
+	Test and debug your apps on your devices. A development build should not be considered as a release of your application. A development build can be installed using the iPhone Configuration Utility or <a href="https://testflightapp.com/">TestFlight</a>.
+</p>
+
+
+<h4>Distribution, Ad Hoc</h4>
+<p>
+	Send your app to testers after adding their devices' UDIDs in the iTunes Provisioning Portal. Can also be used with services like <a href="https://testflightapp.com/">TestFlight</a>.
+</p>
+
+<h4>Distribution, App Store</h4>
+<p>
+	Use this build type to build your application for the iOS App Store.
+</p>
+
 
 <h3>Package name</h3>
 
 <p>
-	It is an unique identifier for your application, preferably in reverse URI format (such as com.[companyname].[appname]). The package name should compatible with the configuration files you have to upload next.
+	It is an unique identifier for your application, preferably in reverse URI format (such as com.[companyname].[appname]). The package name should compatible with the configuration files you have to upload next. A distribution build type cannot contain a wildcard.
 </p>
 
 <h3>Certificate (p12) file and Certificate password</h3>

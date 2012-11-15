@@ -59,6 +59,7 @@ var routes = [
     context:"docs",
     hideinmenu: true,
     pages: [
+      {file: "webdeploy", title:"Web deploy"},
       {file: "chromestore", title:"Chrome Store"},
       {file: "iosbuild", title:"iOS Build"},
       {file: "win8project", title: "Windows 8 Visual Studio project"},

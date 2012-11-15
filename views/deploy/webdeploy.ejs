@@ -1,0 +1,56 @@
+<h1>Web deploy</h1>
+
+<h2>Description</h2>
+
+<p>
+  The <i>Web</i> deploy lets you host your application on a website, accessible through a url. The hosting can be shared or dedicated.
+<p>
+<ul>
+  <li>Shared hosting will make your application available at an address of the form http://www.joshfireapps.com/myapp</li>
+
+  <li>Dedicated hosting will make your application available at a url you own. You have to own the domain name and to be able to configure the DNS informations</li>
+</ul>
+
+<h2>Shared hosting (joshfireapps.com/myapp/)</h2>
+
+<p>
+  Choose an available alias, and deploy. It's as simple as that.
+</p>
+
+<h2>Dedicated hosting (your own domain name)</h2>
+
+<p>
+  To configure the dedicated hosting, you will have to update the DNS records with two informations:
+<p>
+<ul>
+  <li>a CNAME or A record, with the value "gpaas8.dc0.gandi.net." (pay attention topic the final dot)</li>
+  <li>a TXT record, specific to your hostname, that permit us to be sure you own the domain</li>
+</ul>
+
+<h3>TXT record</h3>
+
+<p>
+  For security reasons, we need to be sure that the domain on which you deploy your application really belongs to you. The first time you will deploy your application, it will fail, with a message giving you a code.
+</p>
+
+<img src="/img/webdeploy-idontownthisdomain.png" alt="Example of failed deploy for www.idontownthisdomain.com" />
+
+<p>
+  You have to create a TXT record with:
+  <ul>
+    <li><b>name</b>: '@' or blank (depending on your DNS provider)</li>
+    <li><b>value</b>: the code you received during the deploy</li>
+  </ul>
+</p>
+
+<h3>Propagation time</h3>
+
+<p>
+  After you have updated the zone, you will have to wait some time (sometimes up to a few hours) for the information to propagate. After that, you'll be able to re-deploy your application.
+</p>
+
+<h3>Help</h3>
+
+<p>
+  If you don't know how to edit a DNS zone file for your domain, you can get instructions for most providers <a href="http://support.google.com/a/bin/topic.py?hl=en&topic=1409901">here</a>.
+</p>

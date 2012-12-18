@@ -8,7 +8,7 @@
 <ul>
   <li>Shared hosting will make your application available at an address of the form http://www.joshfireapps.com/myapp</li>
 
-  <li>Dedicated hosting will make your application available at a url you own. You have to own the domain name and to be able to configure the DNS informations</li>
+  <li>Dedicated hosting lets you use your own domain name. You have to own the domain name and to be able to configure the DNS informations</li>
 </ul>
 
 <h2>Shared hosting (joshfireapps.com/myapp/)</h2>
@@ -20,37 +20,43 @@
 <h2>Dedicated hosting (your own domain name)</h2>
 
 <p>
-  To configure the dedicated hosting, you will have to update the DNS records with two informations:
+  Dedicated hosting requires some technical configuration. You have to update the DNS records with two informations:
 <p>
 <ul>
-  <li>a CNAME or A record, with the value "gpaas8.dc0.gandi.net." (pay attention topic the final dot)</li>
-  <li>a TXT record, specific to your hostname, that permit us to be sure you own the domain</li>
+  <li>a <b>CNAME record</b> or <b>A record</b>, with the exact value "gpaas8.dc0.gandi.net."</li>
+  <li>a <b>TXT record</b>, specific to your hostname, that permit us to be sure you own the domain</li>
 </ul>
+
+<h3>CNAME record or A record</h3>
+
+<p>
+  Edit your DNS record to add the exact value "gpaas8.dc0.gandi.net." (pay attention topic the final dot). You can get instructions about how to edit your DNS CNAME records by following this link: <a href="http://support.google.com/a/bin/topic.py?hl=en&topic=1615038" target="_blank">CNAME records for specific domain providers</a>.
+</p>
 
 <h3>TXT record</h3>
 
 <p>
-  For security reasons, we need to be sure that the domain on which you deploy your application really belongs to you. The first time you will deploy your application, it will fail, with a message giving you a code.
+  For security reasons, we need to be sure that the domain on which you deploy your application really belongs to you. We do this by giving you a unique code that you have to add as a TXT record.
+  <br/>
+    The first time you will deploy your application, a code will be returned:
 </p>
 
 <img src="/img/webdeploy-idontownthisdomain.png" alt="Example of failed deploy for www.idontownthisdomain.com" />
 
 <p>
-  You have to create a TXT record with:
+  You have to create a TXT record on your DNS zone file with the following parameters:
   <ul>
     <li><b>name</b>: '@' or blank (depending on your DNS provider)</li>
     <li><b>value</b>: the code you received during the deploy</li>
   </ul>
 </p>
 
+<p>
+  You can get instructions about how to edit your DNS TXT records by following this link: <a href="http://support.google.com/a/bin/topic.py?hl=en&topic=1409901"  target="_blank">TXT records for specific domain providers</a>.
+</p>
+
 <h3>Propagation time</h3>
 
 <p>
-  After you have updated the zone, you will have to wait some time (sometimes up to a few hours) for the information to propagate. After that, you'll be able to re-deploy your application.
-</p>
-
-<h3>Help</h3>
-
-<p>
-  If you don't know how to edit a DNS zone file for your domain, you can get instructions for most providers <a href="http://support.google.com/a/bin/topic.py?hl=en&topic=1409901">here</a>.
+  After you have updated the record, you will have to wait some time (in most case, a few hours) for the information to propagate. After that, you'll be able to re-deploy your application.
 </p>

@@ -63,7 +63,9 @@ var routes = [
       {file: "chromestore", title:"Chrome Store"},
       {file: "iosbuild", title:"iOS Build"},
       {file: "win8project", title: "Windows 8 Visual Studio project"},
-      {file: "androidproj", title:"Android project"}
+      {file: "androidproj", title:"Android project"},
+      {file: "appstore", title:"App Store"},
+      {file: "googleplay", title:"Google Play"}
     ]
   },
   { folder: "develop",

@@ -77,6 +77,7 @@ var routes = [
       {file: "start", title: "Create template entry point(s)"},
       {file: "datasources", title: "Bind to datasources"},
       {file: "devices", title:"Support multiple devices"},
+      {file: "device-specifics", title:"Features specific to a device family"},
       {file: "options", title:"Propose more configuration settings"},
       {file: "addons", title: "Support add-ons"},
       {file: "submit", title: "Submit your template"},

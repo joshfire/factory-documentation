@@ -179,3 +179,40 @@ news.<strong>find</strong>({}, function (err, data) {
 <h2 id="device">User device family</h2>
 
 <p>Information about the user's device is available in the <code class="json">Joshfire.factory.device</code> object. The object only exposes a <code>type</code> property set to the family the device belongs to, in other words one of <em>phone</em>, <em>tablet</em>, <em>tv</em>, <em>desktop</em>, <em>object</em> (see <a href="/doc/ref/package#family-devices">families of devices</a>). This object may be completed over time with additional information (e.g. browser name, version, OS, etc.).</p>
+
+<h2 id="schemaio">Schema.io utilities</h2>
+
+<p>The object <code class="json">Joshfire.schemaio.utils</code> exposes two methods, <code class="json">getThumbnail</code> and <code class="json">getThumbnailUrl</code>.</p>
+
+<h3 id="getthumbnail"><code class="json">Joshfire.schemaio.utils.getThumbnail</code></h3>
+
+<p>Use this utility if you want to get a thumbnail from an schema.io object representing an image. It takes three arguments:</p>
+<dl>
+  <dt><code>item</code></dt>
+  <dd>The item representing the image,</dd>
+  <dt><code>width</code></dt>
+  <dd>(optional) The required width of the thumbnail,</dd>
+  <dt><code>height</code></dt>
+  <dd>(optional) The required height of the thumbnail.</dd>
+</dl>
+
+</p>The utility looks for the <strong>best</strong> thumbnail possible, so the dimension of the returned object may not be exactly <code>width</code> &times; <code>height</code>.</p>
+
+<p>Here is how the algorithm works to decide which thumbnail is best:</p>
+
+<ul>
+  <li>we build a list of all possible thumbnail, looking in <code>item</code>, <code>item.thumbnail</code>, <code>item.image</code> and <code>item.image.thumbnail</code>,</li>
+  <li>we look for the smallest of the images that are larger than the given dimension,</li>
+  <li>if one is found, we return it</li>
+  <li>if none is found, we return the largest image of the list.</li>
+</ul>
+
+<p><em>Note the function returns the ImageObject directly. In particular, any potential update made to the returned object changes the original item.</em></p>
+
+<h3 id="getthumbnailurl"><code class="json">Joshfire.schemaio.utils.getThumbnailUrl</code></h3>
+
+<p>If you only need the url of the thumbnail image, use this method instead. It works the same as <code>getThumbnail</code>, but only returns the url and not the complete object.</p>
+
+<h3 id="thumbnail-proxy">Image resizing proxy</h3>
+
+<p>If the image resizing proxy has been enabled in the <code>options</code> tab of the factory, the image will be processed by a resizing proxy and the resulting image will have the exact dimensions. The image is scaled and if the ratio of the thumbnail differs from the ratio of the source image, cropped.</p>

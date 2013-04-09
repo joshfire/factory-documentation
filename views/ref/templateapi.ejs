@@ -186,10 +186,10 @@ news.<strong>find</strong>({}, function (err, data) {
 
 <h3 id="getthumbnail"><code class="json">Joshfire.schemaio.utils.getThumbnail</code></h3>
 
-<p>Use this utility if you want to get a thumbnail from an schema.io object representing an image. It takes three arguments:</p>
+<p>Use this utility if you want to get a thumbnail from a normalized object. It takes three arguments:</p>
 <dl>
   <dt><code>item</code></dt>
-  <dd>The item representing the image,</dd>
+  <dd>Your normalized object,</dd>
   <dt><code>width</code></dt>
   <dd>(optional) The required width of the thumbnail,</dd>
   <dt><code>height</code></dt>
@@ -215,4 +215,4 @@ news.<strong>find</strong>({}, function (err, data) {
 
 <h3 id="thumbnail-proxy">Image resizing proxy</h3>
 
-<p>If the image resizing proxy has been enabled in the <code>options</code> tab of the factory, the image will be processed by a resizing proxy and the resulting image will have the exact dimensions. The image is scaled and if the ratio of the thumbnail differs from the ratio of the source image, cropped.</p>
+<p>If the image resizing proxy add-on has been enabled in the <code>options</code> tab of the factory, the image will be processed by a resizing proxy and the resulting image will have the exact dimensions. The image is scaled and if the ratio of the thumbnail differs from the ratio of the source image, cropped.</p>

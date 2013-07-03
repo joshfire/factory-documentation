@@ -31,8 +31,15 @@ app.configure('production', function(){
  * are both used for the path and the route.
  */
 var routes = [
-  { folder: "create",
+  { folder: "user",
     title: "Factory User Guide",
+    context: "docs",
+    pages: [
+      {file: "teams", title: "Teams"}
+    ]
+  },
+  { folder: "create",
+    title: "Application User Guide",
     context: "docs",
     pages: [
       {file: "templates", title: "Templates", children: ["template-detail", "template-import"]},

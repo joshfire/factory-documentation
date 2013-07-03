@@ -1,6 +1,12 @@
 .documentation a {
     color: #266AAD;
 }
+
+.documentation p img {
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
 .documentation figure {
     margin: 20px 0;
     text-align: center;

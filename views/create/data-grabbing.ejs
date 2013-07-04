@@ -1,31 +1,31 @@
 <h1>Enrich results with mentioned media</h1>
 
-<p>Some of the data-sources such as <img src="/img/data/data-icons/twitter-x16.png" alt="" /> <a href="/doc/data/twitter-tweets">Twitter</a>, <img src="/img/data/data-icons/facebook-x16.png" alt="" /> Facebook, or <img src="/img/data/data-icons/rss-x16.png" alt="" /> RSS propose to <em>enrich results with mentioned media</em> through a selection menu.</p>
+<p>Some of the data sources such as <img src="/img/data/data-icons/twitter-x16.png" alt="" /> <a href="/doc/data/twitter-tweets">Twitter</a>, <img src="/img/data/data-icons/facebook-x16.png" alt="" /> Facebook, or <img src="/img/data/data-icons/rss-x16.png" alt="" /> RSS propose to <em>enrich results with mentioned media</em> through a selection menu.</p>
 
 <figure>
   <img src="/img/factory-data-grabbing.png" alt="Screenshot of the 'Enrich results' selection menu" />
   <figcaption>Enrich results with mentioned media selection menu</figcaption>
 </figure>
 
-<p>This menu controls whether the media content mentioned by the data-source content is to be fetched as well, and whether the data-source returns mentioned media content or the content itself.</p>
+<p>This menu controls whether the media content mentioned by the data source content is to be fetched as well, and whether the data source returns mentioned media content or the content itself.</p>
 
 <p>For instance, let's say that you created a Twitter datasource that includes a Tweet such as:</p>
 
 <blockquote>Check out the Factory Tour video http://bit.ly/12pezhH</blockquote>
 
-<p>By default, the Twitter data-source considers that the contents of the Tweet is an opaque string and misses the link it contains. For all it knows, there is no link in the Tweet. If you enable results enrichment (also known as <em>grabbing</em>), the data-source will extract the URL that appears in the Tweet, fetch that URL, realize that it is a Dailymotion video and enrich the description of the Tweet returned to the template accordingly: the template now knows that the Tweet references a Dailymotion video and may e.g. complete the layout of the Tweet with the video.</p>
+<p>By default, the Twitter data source considers that the contents of the Tweet is an opaque string and misses the link it contains. For all it knows, there is no link in the Tweet. If you enable results enrichment (also known as <em>grabbing</em>), the data source will extract the URL that appears in the Tweet, fetch that URL, realize that it is a Dailymotion video and enrich the description of the Tweet returned to the template accordingly: the template now knows that the Tweet references a Dailymotion video and may e.g. complete the layout of the Tweet with the video.</p>
 
-<p>Available choices are explained below. Please note that grabbing requires the data-source to run on Joshfire servers and takes time (a few seconds, typically).</p>
+<p>Available choices are explained below. Please note that grabbing requires the data source to run on Joshfire servers and takes time (a few seconds, typically).</p>
 
 
 <h2>Do not enrich results</h2>
 
-<p>Select that option to return the data-source content without any information about the media objects that this content may mention. This is the default value.</p>
+<p>Select that option to return the data source content without any information about the media objects that this content may mention. This is the default value.</p>
 
 
 <h2>Enrich results with mentioned media</h2>
 
-<p>Select that option to return the data-source content completed with information about the media objects that this content may mention. Each item in the returned feed links to the content it mentions, allowing the template that receives this feed to use that information directly. Items that do not mention anything are discarded.</p>
+<p>Select that option to return the data source content completed with information about the media objects that this content may mention. Each item in the returned feed links to the content it mentions, allowing the template that receives this feed to use that information directly.</p>
 
 <p>For instance, let's suppose that the initial content is composed of the following three items:</p>
 
@@ -35,22 +35,31 @@
   <li>a tweet: "The beer of the month @ Joshfire http://ow.ly/l4E6Y"</li>
 </ul>
 
-<p>The data-source would enrich the intial content and return something like:</p>
+<p>The data source would enrich the initial content and return something like:</p>
 
 <ul>
   <li>a tweet: "Check out the Factory Tour video http://bit.ly/12pezhH"
-  <br/><strong>that mentions a video</strong>: "Joshfire Factory tour" by joshfire_factory, at http://www.dailymotion.com/video/xuy6pq_joshfire-factory-tour_tech
-  </li>
+  <br/><strong>that mentions a video</strong>: "Joshfire Factory tour" by joshfire_factory, at http://www.dailymotion.com/video/xuy6pq_joshfire-factory-tour_tech</li>
+  <li>a tweet: "@Joshfire The Factory is great!"</li>
+  <li>a tweet: "The beer of the month @ Joshfire http://ow.ly/l4E6Y"
+  <br/><strong>that mentions a picture set</strong>: "Pot mensuel Mai 2013 @ Joshfire" by mikiane, at http://www.flickr.com/photos/mikiane/sets/72157633505328436/</li>
+</ul>
+
+<p>If the <cite>Filter items that do not mention anything</cite> checkbox is checked, the second tweet is removed from the content returned to the user since it does not contain any link, leading to:</p>
+
+<ul>
+  <li>a tweet: "Check out the Factory Tour video http://bit.ly/12pezhH"
+  <br/><strong>that mentions a video</strong>: "Joshfire Factory tour" by joshfire_factory, at http://www.dailymotion.com/video/xuy6pq_joshfire-factory-tour_tech</li>
   <li>a tweet: "The beer of the month @ Joshfire http://ow.ly/l4E6Y"
   <br/><strong>that mentions a picture set</strong>: "Pot mensuel Mai 2013 @ Joshfire" by mikiane, at http://www.flickr.com/photos/mikiane/sets/72157633505328436/</li>
 </ul>
 
 
-<h2>Return mentioned media and results that do not mention media</h2>
+<h2>Return mentioned media</h2>
 
-<p>Select that option to replace items that mention content with the content they mention. Items that do not mention anything are preserved.</p>
+<p>Select that option to replace items that mention content with the content they mention. Items that do not mention anything are returned as well unless you check the <cite>Filter items that do not mention anything</cite> checkbox.</p>
 
-<p>Given the same set of tweets as before, the data-source would return something like:</p>
+<p>Given the same set of tweets as before, and provided the filter checkbox is not checked, the data source would return something like:</p>
 
 <ul>
   <li>a <strong>video</strong>: "Joshfire Factory tour" by joshfire_factory, at http://www.dailymotion.com/video/xuy6pq_joshfire-factory-tour_tech</li>
@@ -58,14 +67,7 @@
   <li>a <strong>picture set</strong>: "Pot mensuel Mai 2013 @ Joshfire" by mikiane, at http://www.flickr.com/photos/mikiane/sets/72157633505328436/</li>
 </ul>
 
+<p>The second tweet would be removed from the returned feed if the filter checkbox is checked.</p>
 
-<h2>Return only mentioned media</h2>
+<p>Note that, as opposed to a regular feed of items, the returned feed contains items of various types in that case. Templates may not support these types of feed.</p>
 
-<p>Select that option to replace items that mention content with the content they mention. Items that do not mention anything are discarded.</p>
-
-<p>Given the same set of tweets as in previous examples, the data-source would return something like:</p>
-
-<ul>
-  <li>a <strong>video</strong>: "Joshfire Factory tour" by joshfire_factory, at http://www.dailymotion.com/video/xuy6pq_joshfire-factory-tour_tech</li>
-  <li>a <strong>picture set</strong>: "Pot mensuel Mai 2013 @ Joshfire" by mikiane, at http://www.flickr.com/photos/mikiane/sets/72157633505328436/</li>
-</ul>

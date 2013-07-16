@@ -79,6 +79,7 @@ var routes = [
     pages: [
       {file: 'webdeploy', title:'Web deploy'},
       {file: 'chromestore', title:'Chrome Store'},
+      {file: 'tizenwidget', title:'Tizen Widget'},
       {file: 'iosbuild', title:'iOS Build'},
       {file: 'win8project', title: 'Windows 8 Visual Studio project'},
       {file: 'androidproj', title:'Android project'},
@@ -210,7 +211,9 @@ app.get('/doc/:category/:page', function(req, res){
         currentPage: {
           tab: 'doc',
           category: category.folder,
-          page: child || page.file
+          page: child || page.file,
+          categoryTitle: category.title,
+          pageTitle: page.title
         }
       };
       var pagePos = _.indexOf(category.pages, page);

@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Joshfire Developer</title>
+    <title>
+      <% if(currentPage.categoryTitle) { %><%= currentPage.categoryTitle %><% } %><% if(currentPage.pageTitle) { %>:&nbsp;<%= currentPage.pageTitle %><% } %><% if(currentPage.categoryTitle) { %>&nbsp;&mdash;&nbsp;<% } %>Joshfire Documentation
+    </title>
 
     <link rel="icon" href="http://www.joshfire.com/wp-content/themes/joshfire-website/joshfire-favicon.png" />
     <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/joshfire_style.css" />
@@ -30,7 +32,7 @@
 
                 <li id="menu-item-241" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-239 <%= currentPage.tab == 'doc' ? 'current_page_item' : '' %> menu-item-241"><a href="/doc">Documentation</a></li>
                 <li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39 <%= currentPage.tab == 'support' ? 'current_page_item' : '' %>"><a href="/support">Support</a></li>
-               
+
               </ul>
           </div>
         </nav>
@@ -47,7 +49,7 @@
               <li id="menu-item-templates" class="menu-item menu-item-type-post_type menu-item-object-page <%= currentPage == 'templates' ? 'current_page_item' : '' %>">
                 <a href="/doc/latest/templates/">Templates</a>
               </li>
-              
+
             </ul>
           </nav>
           -->
@@ -59,7 +61,7 @@
     <div id="main" class="documentation">
       <div class="wrapper">
         <div id="primary" class="full-width">
-          
+
           <!-- the right hand menu bar. This should be a partial -->
           <div id="navmenu">
             <ul class="nav-categories">
@@ -95,14 +97,14 @@
             <!-- this will be replaced with the actual content of the page -->
             <%- body %>
 
-            <!-- this lower simple pagination (previous, next) appears optionnaly --> 
+            <!-- this lower simple pagination (previous, next) appears optionnaly -->
             <div class='docNavigation'>
               <% if (locals.navPrev) { %>
                 <div class='docNavigationPrev'>
                   <a href='<%= navPrev.url %>'>&larr; <%= navPrev.title %></a>
                 </div>
               <% } %>
-              
+
               <% if (locals.navNext) { %>
                 <div class='docNavigationNext'>
                   <a href='<%= navNext.url %>'><%= navNext.title %> &rarr;</a>

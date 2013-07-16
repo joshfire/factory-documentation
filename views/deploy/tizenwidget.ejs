@@ -1,0 +1,51 @@
+<h1>Tizen widget deploy</h1>
+
+<h2>Description</h2>
+
+<p>
+  The <i>Tizen Widget</i> deploy creates a Tizen widget that you can open in the Tizen IDE. After signing it, you can also upload it on a device, or submit it to the Tizen Store.
+</p>
+
+<p style="font-style: italic;">
+  For all the operations below, you will need the <a href="https://developer.tizen.org/downloads/tizen-sdk" target="_blank">Tizen SDK &ge; 2.1</a>.
+</p>
+
+<h2>How to open the widget in Tizen IDE</h2>
+<p>
+  <ol>
+    <li>Open the Tizen IDE.</li>
+    <li>In the menu, open <code>File &gt; Import&hellip;</code>.</li>
+    <li>Select <code>Tizen &gt; Web Projects and Widget file</code>.</li>
+    <li>Select <code>Select widget file</code> and browse to your widget file.</li>
+    <li>Click on <code>Finish</code>.</li>
+  </ol>
+</p>
+
+<h2>How to install on a device</h2>
+<p>
+  <ol>
+    <li>Follow the documentation about <a href="https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.gettingstarted%2Fhtml%2Fdev_env%2Fcertificate_generator.htm" target="_blank">Tizen certificate generation</a>,</li>
+    <li>Once done, <a href="https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.gettingstarted%2Fhtml%2Fdev_env%2Fcertificate_generator.htm">import it in the Tizen IDE</a>,</li>
+    <li>You can now, <a href="https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.web.appprogramming%2Fhtml%2Fapp_dev_process%2Frunning_widget_target.htm">run the widget on your device</a>.</li>
+  </ol>
+</p>
+
+<h2>How to publish to the Tizen Store</h2>
+<p>
+  <ol>
+    <li>If not done, follow the documentation about <a href="https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.gettingstarted%2Fhtml%2Fdev_env%2Fcertificate_generator.htm" target="_blank">Tizen certificate generation</a>, and <a href="https://developer.tizen.org/help/index.jsp?topic=%2Forg.tizen.gettingstarted%2Fhtml%2Fdev_env%2Fcertificate_generator.htm">import the certificate in the Tizen IDE</a>,</li>
+    <li>Import the widget in the Tizen IDE,</li>
+    <li>Right click on the project folder in the <code>Project Explorer</code>, and select <code>Build project</code></li>
+    <li>Get the widget file:</li>
+      <ul>
+        <li>Right click on the widget file in the project folder in the <code>Project Explorer</code>,</li>
+        <li>Select <code>Export&hellip;</code>,</li>
+        <li>Choose <code>General &gt; File System</code>,</li>
+        <li>Fill in the <code>To directory</code> path,</li>
+        <li>Click on <code>Finish</code>.</li>
+      </ul>
+    </li>
+    <li>Now you can <a href="http://seller.tizenstore.com/login/signIn.as?view=signUp" target="_blank">signup to the Tizen Store</a> as a seller,</li>
+    <li>and <a href="https://developer.tizen.org/help/topic/org.tizen.native.appprogramming/html/app_dev_process/cert_and_pub_app.htm" target="_blank">publish the widget to the Tizen Store</a>.</li>
+  </ol>
+</p>

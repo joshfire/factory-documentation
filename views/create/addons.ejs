@@ -11,57 +11,58 @@
 <h2>Urban Airship Push add-on</h2>
 
 <p>
-  The factory supports push messages via the <a href="http://urbanairship.com">Urban Airship</a> service.
+  The factory supports sending push messages to the users of your deployed application via the <a href="http://urbanairship.com">Urban Airship</a> service.
 </p>
 
 <h3>Creating and configuring your Urban Airship app</h3>
 
 <p>
-  The <a href="http://docs.urbanairship.com/dashboard/getting_started.html">getting started</a> guide outlines the steps you have to go through to setup the notifications.
+  The <a href="http://docs.urbanairship.com/dashboard/getting_started.html">getting started</a> guide outlines the steps to go through to setup notifications.
 </p>
 
 <p>
-  The first step is obvious, <a href="http://docs.urbanairship.com/dashboard/getting_started.html#registration-and-login">get yourself an account</a>.
+  First step is obvious, <a href="http://docs.urbanairship.com/dashboard/getting_started.html#registration-and-login">create an account</a> on Urban Airship.
 </p>
 
 <p>
-  Once registered, the next step is to <a href="http://docs.urbanairship.com/dashboard/getting_started.html#setting-up-your-first-application">create an application</a>. This is a pretty straightforward task, but notice the Production Status options; you can either create a Development app or a Production app.
+  Once registered, next step is to <a href="http://docs.urbanairship.com/dashboard/getting_started.html#setting-up-your-first-application">create an application</a> on Urban Airship. This is pretty straightforward, but notice the <em>Production Status</em> options: you can either create a <em>Development</em> app or a <em>Production</em> app.
   <br>
-  The distinction should speak for itself, the Development mode is for testing whereas the Production mode is for when your app is ready to be released on the stores!
+  The distinction should speak for itself: the <em>Development</em> mode is for testing whereas the <em>Production</em> mode is for the final version of your app released on the stores!
 </p>
 
 <p>
-  The Next step is to <a href="http://docs.urbanairship.com/dashboard/getting_started.html#registration-and-login">setup your services</a>. Currently the Factory only supports iOS and Android:
+  Next step is to <a href="http://docs.urbanairship.com/dashboard/getting_started.html#configuring-your-services">configure the services</a> of your Urban Airship application. Currently, the Joshfire Factory only supports iOS and Android.
 </p>
 
 <h4>Configuring iOS's APNS</h4>
 
 <p>
-  To enable iOS's push service one needs to create a provisioning profile with the 'Push Notifications' service enabled and then upload to Urban Airship the certificate associated to that profile.
-  This is thoroughly described <a href="http://docs.urbanairship.com/build/ios.html#set-up-your-application-with-apple">here</a> (note: no point in reading past the <a href="http://docs.urbanairship.com/build/ios.html#setting-up-urban-airship">Setting up Urban Airship</a> section, it is not needed to setup the Factory add-on).
+  To enable the push service for iOS, create a provisioning profile with the <em>Push Notifications</em> service enabled and then upload the certificate associated with that profile to Urban Airship.
+  This is thoroughly described in <a href="http://docs.urbanairship.com/build/ios.html#set-up-your-application-with-apple">Setup your application with Apple</a> (note: no point in reading past the <a href="http://docs.urbanairship.com/build/ios.html#setting-up-urban-airship">Setting up Urban Airship</a> section). See also <a href="/doc/deploy/iosbuild">iOS build</a> to learn more about provisioning profiles.
 </p>
 <p>
-  Naturally if you create a development Urban Airship app, make sure you create a development provisioning profile and vice-versa for a production app (release or ad-hoc distribution in iOS's terms).
+  If you create a <em>Development</em> (resp. <em>Production</em>) app, make sure that you create a <em>development</em> (rep. <em>release or ad-hoc</em>) provisioning profile.
 </p>
 <p>
-  Do not discard the provisioning profile, certificate file and bundle ID associated to that profile, they are needed at the deploy stage.
+  <strong>Important:</strong> Do not discard the provisioning profile, certificate file and bundle ID associated to that profile, they are needed at the deploy stage!
 </p>
+
 
 <h4>Configuring Android's GCM</h4>
 
 <p>
-  To enable Android's push service one needs to enable Google Cloud Messaging (GCM).
-  This is thoroughly described <a href="http://docs.urbanairship.com/build/android.html#google-setup">here</a> (note: no point in reading past the <a href="http://docs.urbanairship.com/build/android.html#setting-up-gcm-support-for-your-app">Setting up GCM support for your app</a> section, it is not needed to setup the add-on).
+  To enable the push service for Android, enable Google Cloud Messaging (GCM).
+  This is thoroughly described in <a href="http://docs.urbanairship.com/build/android.html#google-setup">Google Setup</a> (note: no point in reading past the <a href="http://docs.urbanairship.com/build/android.html#setting-up-gcm-support-for-your-app">Setting up GCM support for your app</a> section).
 </p>
 <p>
-  When setting up your GCM account, take note of the value after #project in the url : (4815162342 in this example : https://code.google.com/apis/console/#project:4815162342). This is your GCM Sender ID.
+  Take note of the value after <code>#project</code> in the url when you setup your GCM account. This is your GCM Sender ID. For instance, the GCM sender ID is <code>4815162342</code> in <code>https://code.google.com/apis/console/#project:4815162342</code>.
 </p>
 <p>
-  Note that in contrast with iOS which uses different provisioning profiles whether you're build a development or production app, you can use the same GCM account for Android for both type of apps.
+  As opposed to iOS where you need to use different provisioning profiles depending on whether you build a <em>Development</em> or <em>Production</em> app, you can use the same GCM account for Android in both cases.
 </p>
 
 <p>
-  Once your services are setup on Urban Airship, you can go ahead and fill up the fields in the factorys' Urban Airship option pane.
+  Once your services are setup on Urban Airship, you can go ahead and fill up the fields in the Factory's <em>Urban Airship</em> option pane.
 </p>
 
 <h3>Configuring the Factory add-on's option pane</h3>
@@ -70,36 +71,37 @@
   For both iOS and Android deploys you need to set your Urban Airship app API keys. These are available in your Urban Airship's app settings section, under 'API Keys' as illustrated in the screenshot below:
 </p>
 
+<figure>
+  <img src="/img/factory-addon-push-urbanairship-apikeys.png" alt="" />
+  <figcaption>Urbain Airship admin interface that lists needed API keys.</figcaption>
+</figure>
+
 <p>
-  <img src="/img/factory-addon-push-urbanairship-apikeys.png" />
+  Fill the development API keys section for a <em>Development</em> app and the production API keys section for a <em>Production</em> app.
 </p>
 
 <p>
-  Naturally fill in the development API keys section for a develoment urban airship app and production API keys section for a production app. The factory build will use the right rights depending on whether you're doing a development deploy or a production deploy.
-</p>
-
-<p>
-  For Android, you'll also need to set the GCM Sender ID that you took note of previously.
+  For Android, set the GCM Sender ID as well.
 </p>
 
 <h3>Factory Deploy Settings</h3>
 
 <p>
-  In you app's deploy setting you need to set the appropriate bundle IDs/package names.
+  In your app's deploy setting you need to set the appropriate bundle IDs/package names.
 </p>
 
 <p>
-   For iOS builds, set your bundle ID to the value you chose when creating your provisioning profile.
+   For iOS builds, set the bundle ID to the value chosen when you created your provisioning profile.
    <br>
-   For Android builds, set your package name to the value that you chose when configuring your GCM service on Urban Airship.
+   For Android builds, set the package name to the value chosen when you configured your GCM service on Urban Airship.
    <br>
-   If you forgot any of these, they are both available in the same page as the API Keys in your Urban Airship's app settings (bottom right corner) as you can see in the above screenshot.
+   If you forgot any of these, they are both available in the same page as the API Keys in your Urban Airship's app settings (bottom right corner).
 </p>
 
 <p>
-  When deploying for iOS, you must use the same provisioning profile and certificate that you used to set up Urban Airship app's APNS service.
+  When deploying for iOS, note that you must use the same provisioning profile and certificate that you used to set up Urban Airship app's APNS service.
 </p>
 
 <p>
-  <strong>Remember: debug builds need development API Keys while release and ad-hoc builds need production API Keys.</strong>
+  <strong>Important:</strong> debug builds need development API Keys while release and ad-hoc builds need production API Keys.
 </p>

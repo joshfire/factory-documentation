@@ -56,7 +56,6 @@ var routes = [
       {file: 'addons', title: 'Add-ons'},
       {file: 'configuration', title: 'Configuration',
         children: ['configuration-template']},
-      {file: 'payment', title: 'Payment Page'},
       {file: 'deploy', title: 'Deploying your application'}
     ]
   },

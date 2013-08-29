@@ -1,6 +1,6 @@
 <h1>Template manifest reference</h1>
 
-<p>All templates must include a top-level manifest file called <code>package.json</code>. Its role is to provide an overview of the template (e.g. name, description), indications about supported datasources and possible configuration options. The factory uses the information contained in the manifest file to present and filter templates, as well as to adjust settings presented to the user when a template gets selected.</p>
+<p>All templates must include a top-level manifest file called <code>package.json</code>. Its role is to provide an overview of the template (e.g. name, description), indications about supported datasources and possible configuration options. The Factory uses the information contained in the manifest file to present and filter templates, as well as to adjust settings presented to the user when a template gets selected.</p>
 
 <p>The manifest file follows the <a href="http://www.json.org/">JavaScript Object Notation</a> (JSON) format. It is very similar to package manifest files used in other projects on the Web. That's on purpose!</p>
 
@@ -8,7 +8,7 @@
 
 <h2 id="structure">Manifest structure</h2>
 
-<p>Generic description parameters are defined as top level name/value pairs in the manifest. Parameters that are specific to the factory are defined under the namespace <code>joshfire</code>. Parameter names are case-sensitive.</p>
+<p>Generic description parameters are defined as top level name/value pairs in the manifest. Parameters that are specific to the Factory are defined under the namespace <code>joshfire</code>. Parameter names are case-sensitive.</p>
 
 <p>The generic structure of a manifest file (fake values):</p>
 <pre><code class="json">{
@@ -57,7 +57,8 @@
     "<a href="#devices">devices</a>": [
       {
         "<a href="#family-devices">devices</a>": "<em>phone</em>",
-        "<a href="#family-startfile">startfile</a>": "index.phone.html",
+        "<a href="#family-startfile">startfile</a>": "build/phone/index.html",
+        "<a href="#family-includedir">includedir</a>": "build/common",
         "<a href="#family-orientation">orientation</a>": "auto",
         "<a href="#family-disablePreview">disablePreview</a>": true,
         "<a href="#family-images">images</a>": "img/phone/image.png",
@@ -111,7 +112,7 @@
   <dt>Description</dt>
   <dd>A short identifier for the template.</dd>
   <dt>Usage</dt>
-  <dd>The factory uses the name as unique identifier for the template. Thus the value must be globally unique throughout templates. The parameter is never shown to factory users.</dd>
+  <dd>The Factory uses the name as unique identifier for the template. Thus the value must be globally unique throughout templates. The parameter is never shown to the Factory users.</dd>
   <dt>JSON type</dt>
   <dd>A string.
   <br/>Less than 32 characters in the set <code>[a-zA-Z0-9\-_]</code>. In particular, white spaces are not allowed.</dd>
@@ -128,7 +129,7 @@
   <dt>Description</dt>
   <dd>The template's label, in English.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the template's fullname when it displays the list of templates. This label should be short, descriptive, and unique throughout templates.</dd>
+  <dd>The Factory displays the template's fullname when it displays the list of templates. This label should be short, descriptive, and unique throughout templates.</dd>
   <dt>JSON type</dt>
   <dd>A string.
   <br/>Less than 32 characters.</dd>
@@ -178,7 +179,7 @@
   <dt>Description</dt>
   <dd>A list of keywords that describe the template</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the list of keywords next to the template name to guide the user selection. It also uses these keywords to filter out templates for search purpose.</dd>
+  <dd>The Factory displays the list of keywords next to the template name to guide the user selection. It also uses these keywords to filter out templates for search purpose.</dd>
   <dt>JSON type</dt>
   <dd>An array of strings</dd>
   <dt>Example</dt>
@@ -197,7 +198,7 @@
   <dt>Description</dt>
   <dd>URL of the Web site that describes the template</dd>
   <dt>Usage</dt>
-  <dd>The factory will include a link to the home page of the template in the template's detailed view.</dd>
+  <dd>The Factory will include a link to the home page of the template in the template's detailed view.</dd>
   <dt>JSON type</dt>
   <dd>A string that represents a URI.</dd>
   <dt>Example</dt>
@@ -213,7 +214,7 @@
   <dt>Description</dt>
   <dd>Details about the contributors for this template. By convention, the first contributor is the original author of the template.</dd>
   <dt>Usage</dt>
-  <dd>Future versions of the factory will display the names of the contributors and allow to filter templates of a contributor.</dd>
+  <dd>Future versions of the Factory will display the names of the contributors and allow to filter templates of a contributor.</dd>
   <dt>JSON type</dt>
   <dd>An array of objects. Each object:
   <ul>
@@ -243,7 +244,7 @@
   <dt>Description</dt>
   <dd>Details about the maintainers for this template.</dd>
   <dt>Usage</dt>
-  <dd>Future versions of the factory may display the names of the maintainers of a template.</dd>
+  <dd>Future versions of the Factory may display the names of the maintainers of a template.</dd>
   <dt>JSON type</dt>
   <dd>An array of objects that follows the same format as <code><a href="#contributors">contributors</a></code>.</dd>
   <dt>Example</dt>
@@ -263,7 +264,7 @@
   <dt>Description</dt>
   <dd>Details about the licenses under which the template source code is available.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the information next to the template.</dd>
+  <dd>The Factory displays the information next to the template.</dd>
   <dt>JSON type</dt>
   <dd>An array of objects, where each object has a <code>type</code> property, a string that specifies the type of license, and a <code>url</code> property, the URL of the corresponding license text.
   <br/>If the license is in the list of <a href="http://www.opensource.org/licenses/alphabetical">approved open source initiative licenses</a>, the <code>type</code> property must be the abbreviation of the license when available (defined between parentheses in the list) or the license's full name as it appears on the list.
@@ -285,7 +286,7 @@
 
 <h2 id="template-images">Template images</h2>
 
-<p>Template images convey the spirit of the template. Template images are <strong>extremely important</strong> because factory users will build their first impression about the template based on these images.</p>
+<p>Template images convey the spirit of the template. Template images are <strong>extremely important</strong> because Factory users will build their first impression about the template based on these images.</p>
 <p>While template images should convey the look-and-feel of the template, they are not meant to be screenshots. That said, <a href="#family-screenshots">screenshots</a> per supported family of devices are useful too and should be included in the manifest in the relevant section.</p>
 
 <h3 id="images"><code>images</code></h3>
@@ -294,7 +295,7 @@
   <dd>Small and large template images.
   <br/>Images should convey the purpose, visual layout, and main targeted audience of the template.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the smaller image in the templates selection list and the larger image in the template's details page (together with the template's <a href="#description">description</a>).</dd>
+  <dd>The Factory displays the smaller image in the templates selection list and the larger image in the template's details page (together with the template's <a href="#description">description</a>).</dd>
   <dt>JSON type</dt>
   <dd>An object with:
   <ul>
@@ -314,7 +315,7 @@
 
 <h2 id="supported-devices">Supported devices</h2>
 
-<p>Web applications run on devices with very different constraints (from desktop computers to user-made connected objects). Web applications generated by the factory include a device detection mechanism that identifies and exposes the family of the device that runs the application. Please refer to <a href="/doc/develop/devices">Support multiple devices</a> for more details.</p>
+<p>Web applications run on devices with very different constraints (from desktop computers to user-made connected objects). Web applications generated by the Factory include a device detection mechanism that identifies and exposes the family of the device that runs the application. Please refer to <a href="/doc/develop/devices">Support multiple devices</a> for more details.</p>
 <p>In the manifest file,  The <code>devices</code> section is recommended in all template manifests. A template must handle all families of devices if the section is not present.</p>
 
 <h3 id="devices"><code>devices</code></h3>
@@ -323,7 +324,7 @@
   <dt>Description</dt>
   <dd>Explicits the list of families supported by the template, providing optional application entry points on a per-family basis.</dd>
   <dt>Usage</dt>
-  <dd>The factory uses the list as hints and filter to guide users upon templates selection.
+  <dd>The Factory uses the list as hints and filter to guide users upon templates selection.
   <br/>The generated Web application automatically redirects users to the appropriate entry point based on the <code>startfile</code> values defined in this section.</dd>
   <dt>Type</dt>
   <dd>Array of family objects</dd>
@@ -331,16 +332,24 @@
   <dd><pre><code class="json">"devices": [
   {
     "devices": "phone",
-    "startfile": "app/index.phone.html",
+    "startfile": "phone/index.html",
+    "includedir": [
+      "css",
+      "images"
+    ],
     "images": ""
   },
   {
     "devices": "tv",
-    "startfile": "app/index.tv.html"
+    "startfile": "tv/index.html",
+    "includedir": [
+      "css",
+      "images"
+    ],
   },
   {
     "devices": "*",
-    "startfile": "app/index.html"
+    "startfile": "index.html"
   }
 ]</code></pre></dd>
   <dt>Required?</dt>
@@ -368,7 +377,7 @@
     <li><em>*</em> to target all devices</li>
   </ul></dd>
   <dt>Usage</dt>
-  <dd>The factory uses that information to filter templates according to the families of devices they support</dd>
+  <dd>The Factory uses that information to filter templates according to the families of devices they support</dd>
   <dt>JSON type</dt>
   <dd>A string or an array of strings</dd>
   <dt>Example</dt>
@@ -393,7 +402,7 @@
   </ul></dd>
   <dt>JSON type</dt>
   <dd>A string. Value is one of "<em>portrait</em>", "<em>landscape</em>", or "<em>auto</em>".
-  <br/>Default value is "<em>auto</em>", meaning that the factory does not attempt to lock the orientation in the resulting application.</dd>
+  <br/>Default value is "<em>auto</em>", meaning that the Factory does not attempt to lock the orientation in the resulting application.</dd>
   <dt>Example</dt>
   <dd><pre><code class="json">"orientation": "landscape"</code></pre></dd>
   <dt>Required?</dt>
@@ -403,7 +412,7 @@
 <h4 id="family-disablePreview"><code>disablePreview</code></h4>
 <dl>
   <dt>Description</dt>
-  <dd>Disable preview pane for the underlying family of devices on the factory.</dd>
+  <dd>Disable preview pane for the underlying family of devices on the Factory.</dd>
   <dt>Usage</dt>
   <dd>If your template uses device specific capabilities, browser sniffing or a <code>width</code> value different from <code>device-width</code> in a <code>&lt;meta name="viewport"&gt;</code> declaration, you may run into problems with the preview pane that does not support such features. In turn, users might consider that your template is broken even if it works perfectly fine on devices.
   <br/>Set this flag to replace the preview pane by an invitation to preview the app on a real device.
@@ -420,14 +429,36 @@
 <h4 id="family-startfile"><code>startfile</code></h4>
 <dl>
   <dt>Description</dt>
-  <dd>Address of the application starting point for the families identified in <code>devices</code></dd>
+  <dd>Address of the application starting point for the families identified in <code>devices</code>, relative to the root folder of the template. The property also sets the root folder for these families.</dd>
   <dt>Usage</dt>
-  <dd>The Web application generated by the factory will automatically redirect the user to this starting point based on the device it proposes.</dd>
+  <dd>The Web application generated by the Factory will automatically redirect the user to this starting point based on the device it uses.<br/>If the starting point is in a subfolder, the Factory assumes that subfolder is the root folder for the families identified in <code>devices</code> and will only include the contents of that subfolder in deployed applications. This mechanism can greatly reduce the size of the deployed application but keep in mind that the code in the subfolder must not reference resources in sibling folders as a result! (see <a href="#family-includedir"><code>includedir</code></a> below to share resources across families)</dd>
   <dt>JSON type</dt>
   <dd>A string that represents a URI.
-  <br/>The URI should be relative to the template's top-level directory.</dd>
+  <br/>The URI must be relative to the template's top-level directory.</dd>
   <dt>Example</dt>
   <dd><pre><code class="json">"startfile": "app/index.phone.html"</code></pre></dd>
+  <dt>Required?</dt>
+  <dd>No. In its absence, the <code>startfile</code> defined for all devices (value <em>*</em>) is used if present. In its absence, the default startfile (<code>index.html</code>) is used.</dd>
+</dl>
+
+<h4 id="family-includedir"><code>includedir</code></h4>
+<dl>
+  <dt>Description</dt>
+  <dd>Additional folders to include in deployed applications for the families identified in <code>devices</code> when the <a href="#family-startfile"><code>startfile</code></a> property sets a root folder that is different from the root folder of the template.</dd>
+  <dt>Usage</dt>
+  <dd>The Web application generated by the Factory will include the contents of the folders listed in this property. Template developers may thus use that property to share resources across families of devices.
+    <br/>Note that property is useless if <code>startfile</code> is not defined or does not set a root folder different from the root folder of the template.</dd>
+  <dt>JSON type</dt>
+  <dd>A string that represents the path to a folder to include or an array of such strings.
+  <br/>The paths must be relative to the template's top-level directory.</dd>
+  <dt>Example</dt>
+  <dd>Use the code below to have the Factory include the contents of the <code>phone</code>, <code>images</code> and <code>styles</code> folders in deployed "phone" applications.
+  <pre><code class="json">"devices": {
+  "devices": "phone",
+  "startfile": "phone/index.html",
+  "includedir": ["images", "styles"]
+}</code></pre>
+  Note that all the other template folders will be discarded.</dd>
   <dt>Required?</dt>
   <dd>No. In its absence, the <code>startfile</code> defined for all devices (value <em>*</em>) is used if present. In its absence, the default startfile (<code>index.html</code>) is used.</dd>
 </dl>
@@ -438,7 +469,7 @@
   <dd>Specific template image for the underlying family of devices.
   <br/>As for the global template image, this image should not be an exact screenshot. It may include a screenshot taken on a typical device of the family augmented with additional content for instance.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays this specific image in the templates selection list when selecting a particular family of devices or when moving over the logo of a family of devices with the mouse.</dd>
+  <dd>The Factory displays this specific image in the templates selection list when selecting a particular family of devices or when moving over the logo of a family of devices with the mouse.</dd>
   <dt>JSON type</dt>
   <dd>URI to a PNG or JPEG image.
   <br/>Relative URIs are resolved against the template's top-level directory.
@@ -455,7 +486,7 @@
   <dt>Description</dt>
   <dd>Screenshots of the template on typical devices of the family.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the screenshots in the template's details page.
+  <dd>The Factory displays the screenshots in the template's details page.
   <br/>Screenshots must be <em>real</em> screenshots.</dd>
   <dt>JSON type</dt>
   <dd>A URI or an array of URIs to screenshots.
@@ -472,7 +503,7 @@
 
 <h2 id="datasources-inputs">Datasources</h2>
 
-<p>Through the factory, the user configures sources of data and binds them as template inputs. Templates may support any number of datasources.</p>
+<p>Through the Factory, the user configures sources of data and binds them as template inputs. Templates may support any number of datasources.</p>
 
 <h3 id="datasources"><code>datasources</code></h3>
 
@@ -480,7 +511,7 @@
   <dt>Description</dt>
   <dd>The datasource inputs supported by the template.</dd>
   <dt>Usage</dt>
-  <dd>The factory adapts the user interface according to the number and type of inputs described in this section.</dd>
+  <dd>The Factory adapts the user interface according to the number and type of inputs described in this section.</dd>
   <dt>JSON type</dt>
   <dd>An object.
   <br/>Property names are the names of the datasources used by the template.
@@ -503,7 +534,7 @@
 
 <h3 id="datasource">The datasource object</h3>
 
-<p>The datasource object describes one of the input feeds of a template. The factory handles various types of data sources, presenting a unique data interface to templates. Check <a href="/doc/develop/datasources">Dealing with datasources</a> for more details.</p>
+<p>The datasource object describes one of the input feeds of a template. The Factory handles various types of data sources, presenting a unique data interface to templates. Check <a href="/doc/develop/datasources">Dealing with datasources</a> for more details.</p>
 
 <h4 id="datasource-title"><code>title</code></h4>
 
@@ -511,7 +542,7 @@
   <dt>Description</dt>
   <dd>Title for this datasource input.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the title in the user interface to identify this datasource input.</dd>
+  <dd>The Factory displays the title in the user interface to identify this datasource input.</dd>
   <dt>JSON type</dt>
   <dd>A string.
   <br/>Less than 32 characters.</dd>
@@ -527,7 +558,7 @@
   <dt>Description</dt>
   <dd>A detailed text that describes this datasource input in more details.</dd>
   <dt>Usage</dt>
-  <dd>The factory displays the description when the user wants to get more details about this datasource input
+  <dd>The Factory displays the description when the user wants to get more details about this datasource input
   <dt>JSON type</dt>
   <dd>A string.
   <br/>Less than 4096 characters.
@@ -543,7 +574,7 @@
   <dt>Description</dt>
   <dd>Can this datasource input be fed with more than one datasource?</dd>
   <dt>Usage</dt>
-  <dd>The factory allows the user to connect more than one datasource to this datasource input when the property is set.
+  <dd>The Factory allows the user to connect more than one datasource to this datasource input when the property is set.
   <br/>The generated Web application gets access to a list of datasources for this datasource input when the property is set.</dd>
   <dt>JSON type</dt>
   <dd>Boolean</dd>
@@ -586,11 +617,11 @@
   <dt>Description</dt>
   <dd>Additional template options</dd>
   <dt>Usage</dt>
-  <dd>The factory adjusts the template's configuration pane based on information given in this section, and ensures the selected option values get exposed in the generated Web application.</dd>
+  <dd>The Factory adjusts the template's configuration pane based on information given in this section, and ensures the selected option values get exposed in the generated Web application.</dd>
   <dt>JSON type</dt>
   <dd>An object that follows the <a href="/doc/ref/jsonform">JSON form</a> format.
-  <br/>Note that the factory automatically adds datasource inputs in the schema of the JSON form object with a name starting with <code>datasources.<em>[datasource name]</em></code>. These inputs must be referenced in the <code>form</code> section of the JSON form object.
-  <br/>Also note that the factory already generates form submission buttons which should not be defined in the schema.</dd>
+  <br/>Note that the Factory automatically adds datasource inputs in the schema of the JSON form object with a name starting with <code>datasources.<em>[datasource name]</em></code>. These inputs must be referenced in the <code>form</code> section of the JSON form object.
+  <br/>Also note that the Factory already generates form submission buttons which should not be defined in the schema.</dd>
   <dt>Example</dt>
   <dd><pre><code class="json">"options": {
   "schema": {
@@ -618,7 +649,7 @@
   <dt>Description</dt>
   <dd>List of open-source libraries used within the template</dd>
   <dt>Usage</dt>
-  <dd>The factory renders the list of libraries in the template's details view, including links to the homepage of the libraries and to the license(s) under which they are made available.</dd>
+  <dd>The Factory renders the list of libraries in the template's details view, including links to the homepage of the libraries and to the license(s) under which they are made available.</dd>
   <dt>JSON type</dt>
   <dd>An object that follows the same <a href="#structure">structure</a> as the root level of the manifest file, restricted to generic description parameters. Most important properties are <code><a href="#name">name</a></code>, <code><a href="#description">description</a></code>, <code><a href="#homepage">homepage</a></code> and <code><a href="#licenses">licenses</a></code>.</dd>
   <dt>Example</dt>
